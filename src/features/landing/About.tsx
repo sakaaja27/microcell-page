@@ -48,7 +48,7 @@ export default function About({ onOpenSimulator }: AboutProps) {
               Teknologi DualCell MFC + BPFC
             </h3>
             <p className="text-gray-600 leading-relaxed text-sm">
-              Menggabungkan Microbial Fuel Cell dan Biophotofuel Cell dalam satu sistem terintegrasi untuk menghasilkan energi listrik secara optimal dari limbah organik.
+              Menggabungkan Microbial Fuel Cell dan Biophotofuel Cell dalam satu sistem terintegrasi untuk menghasilkan energi listrik secara optimal dari limbah kotoran sapi.
             </p>
           </div>
 

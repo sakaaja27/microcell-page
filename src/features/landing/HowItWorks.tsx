@@ -6,7 +6,7 @@ export default function HowItWorks() {
       num: '01',
       emoji: '🐄',
       title: 'Pengumpulan',
-      desc: 'Limbah cair dari kotoran peternakan disalurkan ke bak ekualisasi primer untuk homogenisasi dan penstabilan pH awal.',
+      desc: 'Limbah dari kotoran peternakan disalurkan ke chamber anoda, di mana mikroba mulai memetabolisme limbah organik dan memisahkan elektron dan proton.',
     },
     {
       num: '02',
@@ -18,7 +18,7 @@ export default function HowItWorks() {
       num: '03',
       emoji: '⚡',
       title: 'Aliran Elektron',
-      desc: 'Elektron mengalir melintasi sirkuit eksternal ke ruang katoda aerobik, menghasilkan beda potensial listrik searah (DC) yang stabil.',
+      desc: 'Elektron mengalir melintasi sirkuit eksternal ke ruang katoda, menghasilkan beda potensial listrik searah (DC) yang stabil.',
     },
     {
       num: '04',
@@ -36,7 +36,7 @@ export default function HowItWorks() {
       num: '06',
       emoji: '📱',
       title: 'Visualisasi IoT',
-      desc: 'Konektivitas nirkabel mengirim data performa sirkuit dan viabilitas mikroba ke aplikasi mobile secara real-time dan transparan.',
+      desc: 'Konektivitas nirkabel mengirim data performa ke aplikasi mobile secara real-time dan transparan.',
     },
   ];
 
@@ -53,7 +53,7 @@ export default function HowItWorks() {
             Alur Kerja Regeneratif
           </h2>
           <p className="font-sans text-sm sm:text-base text-emerald-200/80 max-w-2xl mx-auto leading-relaxed">
-            Dari pembersihan kandang hingga menyalakan peralatan listrik rumah tangga Anda, temukan alur konversi bersih tanpa limbah sisa berbahaya.
+            Dari limbah kotoran ternak hingga menyalakan peralatan listrik rumah tangga Anda.
           </p>
         </div>
 

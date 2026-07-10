@@ -20,7 +20,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
             Pilih Skema yang Sesuai Kebutuhanmu
           </h2>
           <p className="font-sans text-base md:text-lg text-emerald-800 max-w-3xl mx-auto leading-relaxed">
-            MicroCell tersedia dalam tiga skema kepemilikan dan layanan — fleksibel sesuai skala peternakan Anda.
+            MicroCell tersedia dalam tiga skema kepemilikan dan layanan fleksibel sesuai skala peternakan Anda.
           </p>
         </div>
 
@@ -192,22 +192,22 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
             <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Limbah Ternak</span>
           </div>
 
-          <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
+          <div className="flex flex-col md:border-l md:border-emerald-100 md:pl-4">
             <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Output Daya</span>
             <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">AC 220V / DC 12V</span>
           </div>
 
-          <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
+          <div className="flex flex-col md:border-l md:border-emerald-100 md:pl-4">
             <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Format Desain</span>
             <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Stackable Modular</span>
           </div>
 
-          <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
+          <div className="flex flex-col md:border-l md:border-emerald-100 md:pl-4">
             <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Penyimpanan</span>
             <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Baterai 12V</span>
           </div>
 
-          <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
+          <div className="flex flex-col md:border-l md:border-emerald-100 md:pl-4">
             <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Kategori Dampak</span>
             <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Circular Economy</span>
           </div>
