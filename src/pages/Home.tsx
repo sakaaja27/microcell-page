@@ -18,7 +18,7 @@ export default function Home() {
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#041706] text-emerald-100 selection:bg-emerald-500 selection:text-emerald-950 font-sans antialiased">
+    <div className="overflow-x-hidden min-h-screen bg-[#041706] text-emerald-100 selection:bg-emerald-500 selection:text-emerald-950 font-sans antialiased">
       <Header 
         onOpenSurvey={() => setIsSurveyOpen(true)}
         onOpenSimulator={() => setIsSimulatorOpen(true)}
