@@ -167,7 +167,7 @@ export default function CalculatorModal({ isOpen, onClose }: CalculatorModalProp
               Tutup Kalkulator
             </button>
             <a 
-              href="https://wa.me/6281234567890?text=Halo%20MicroCell,%20saya%20sudah%20mencoba%20kalkulator%20dan%20ingin%20konsultasi%20untuk%20peternakan%20saya%20dengan%20kapasitas%20sapinya%20tertera%20..."
+              href="https://wa.me/6285812749419?text=Halo%20MicroCell,%20saya%20sudah%20mencoba%20kalkulator%20dan%20ingin%20konsultasi%20untuk%20peternakan%20saya%20dengan%20kapasitas%20sapinya%20tertera%20..."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full rounded-full bg-emerald-500 px-6 py-3 text-center text-sm font-bold text-[#041706] hover:bg-emerald-400 hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all duration-200"

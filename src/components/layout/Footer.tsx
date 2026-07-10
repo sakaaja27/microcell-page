@@ -73,7 +73,7 @@ export default function Footer({ onOpenSurvey }: FooterProps) {
               Ada pertanyaan terkait kelayakan teknis atau ingin merancang survei peternakan komunal Anda?
             </p>
             <a
-              href="https://wa.me/6281234567890?text=Halo%20MicroCell,%20saya%20tertarik%20dengan%20sistem%20elektrifikasi%20limbah%20kotoran%20sapi%20dan%20ingin%20berkonsultasi%20..."
+              href="https://wa.me/6285812749419?text=Halo%20MicroCell,%20saya%20tertarik%20dengan%20sistem%20elektrifikasi%20limbah%20kotoran%20sapi%20dan%20ingin%20berkonsultasi%20..."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-emerald-500 text-white hover:text-white hover:shadow-[0_0_15px_rgba(22,163,74,0.4)] px-5 py-3 rounded-full text-xs font-bold transition-all"
