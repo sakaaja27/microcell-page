@@ -7,7 +7,7 @@ export default function FAQ() {
   const faqItems = [
     {
       question: 'Berapa lama sistem ini dapat bertahan?',
-      answer: 'Sistem Microbial Fuel Cell (MFC) MicroCell dirancang untuk ketahanan jangka panjang hingga 8-10 tahun dengan perawatan minimal. Kompartemen anoda dan katoda menggunakan bahan komposit tahan korosi, sementara biofilm koloni bakteri memiliki kemampuan meregenerasi populasinya sendiri secara alami selama asupan bahan organik dari limbah cair tetap terjaga harian.',
+      answer: 'Sistem Microbial Fuel Cell (MFC) MicroCell dirancang untuk ketahanan jangka panjang dengan perawatan minimal. Kompartemen anoda dan katoda menggunakan bahan komposit tahan korosi, sementara biofilm koloni bakteri memiliki kemampuan meregenerasi populasinya sendiri secara alami selama asupan bahan organik dari limbah cair tetap terjaga harian.',
     },
     {
       question: 'Berapa lama waktu yang dibutuhkan agar sistem dapat bekerja secara optimal?',
@@ -30,13 +30,13 @@ export default function FAQ() {
   return (
     <section className="py-24 bg-white text-[#041706]" id="faq">
       <div className="max-w-4xl mx-auto px-6">
-        
+
         {/* Header */}
-        <div className="text-center mb-16">
-          <span className="text-[10px] bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-3 py-1 rounded-full font-bold uppercase tracking-widest">
+        <div className="text-center mb-12">
+          <span className="text-[10px] bg-emerald-500/10 text-emerald-600 border border-emerald-500/25 px-3 py-1 rounded-full font-bold uppercase tracking-widest">
             Bantuan &amp; Informasi
           </span>
-          <h2 className="mt-4 font-sans text-3xl sm:text-4xl font-extrabold text-emerald-950 tracking-tight mb-4">
+          <h2 className="mt-3 font-sans text-3xl sm:text-4xl font-extrabold text-emerald-950 tracking-tight mb-3">
             Pertanyaan Umum
           </h2>
           <p className="font-sans text-sm sm:text-base text-emerald-800 max-w-xl mx-auto leading-relaxed">
@@ -49,13 +49,12 @@ export default function FAQ() {
           {faqItems.map((item, index) => {
             const isOpen = activeIndex === index;
             return (
-              <div 
+              <div
                 key={index}
-                className={`border border-emerald-500/10 rounded-2xl overflow-hidden transition-all duration-300 ${
-                  isOpen 
-                    ? 'shadow-lg shadow-emerald-900/5 bg-emerald-50/20 border-l-4 border-l-emerald-600 translate-x-0.5' 
-                    : 'bg-white hover:bg-emerald-50/10'
-                }`}
+                className={`border-2 border-emerald-500/20 rounded-2xl overflow-hidden transition-all duration-300 ${isOpen
+                  ? 'shadow-lg shadow-emerald-900/5 bg-emerald-50/20 border-emerald-500/35 border-l-4 border-l-emerald-600 translate-x-0.5'
+                  : 'bg-white hover:bg-emerald-500/10'
+                  }`}
               >
                 {/* Accordion Toggle Header */}
                 <button
@@ -66,20 +65,18 @@ export default function FAQ() {
                   <span className="font-sans text-sm sm:text-base font-bold text-emerald-950 pr-4">
                     {item.question}
                   </span>
-                  <div className={`h-8 w-8 rounded-full flex items-center justify-center bg-emerald-100/50 text-emerald-600 transition-transform duration-300 ${
-                    isOpen ? 'rotate-180 bg-emerald-600 text-white' : ''
-                  }`}>
+                  <div className={`h-8 w-8 rounded-full flex items-center justify-center bg-emerald-100/50 text-emerald-600 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-600 text-white' : ''
+                    }`}>
                     <ChevronDown size={18} />
                   </div>
                 </button>
 
                 {/* Collapsible Answer Pane */}
-                <div 
-                  className={`transition-all duration-300 ease-in-out ${
-                    isOpen 
-                      ? 'max-h-[300px] border-t border-emerald-500/5 opacity-100 py-5 px-6' 
-                      : 'max-h-0 overflow-hidden opacity-0 py-0 px-6'
-                  }`}
+                <div
+                  className={`transition-all duration-300 ease-in-out ${isOpen
+                    ? 'max-h-75 border-t border-emerald-500/5 opacity-100 py-5 px-6'
+                    : 'max-h-0 overflow-hidden opacity-0 py-0 px-6'
+                    }`}
                 >
                   <p className="text-sm text-emerald-800 leading-relaxed font-sans">
                     {item.answer}
