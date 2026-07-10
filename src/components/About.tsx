@@ -12,11 +12,18 @@ export default function About({ onOpenSimulator }: AboutProps) {
         {/* Top Section */}
         <div className="flex flex-col md:flex-row items-center gap-16 mb-24">
           <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src="/assets/images/prototipe.png"
-              alt="Prototipe MicroCell"
-              className="w-full max-w-xl object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
-            />
+            <div className="relative w-full max-w-xl">
+              <img
+                src="/assets/images/prototipe.png"
+                alt="Prototipe MicroCell"
+                className="w-full h-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
+              />
+              <img
+                src="/assets/images/dashboard.png"
+                alt="Mobile Dashboard"
+                className="absolute -right-4 md:-right-6 -bottom-4 md:-bottom-2 w-[20%] md:w-[20%] max-w-[150px] object-contain drop-shadow-2xl hover:-translate-y-2 transition-transform duration-500"
+              />
+            </div>
           </div>
 
           <div className="w-full md:w-1/2">

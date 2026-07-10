@@ -63,7 +63,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               </ul>
 
               <a
-                href="https://wa.me/6285760199917?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Menyewa%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
+                href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Menyewa%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.18)]"
@@ -79,10 +79,10 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
             <div className="relative z-10 flex justify-between items-start mb-6">
               <div>
                 <div className="flex items-center gap-1.5 text-amber-300 font-bold text-xs mb-3">
-                  <Star size={14} fill="currentColor" /> Paling Diminati
+                  <Star size={14} fill="currentColor" /> Rekomendasi
                 </div>
                 <div className="border border-white/30 bg-white/10 text-white font-bold text-xs px-4 py-1.5 rounded-full inline-block backdrop-blur-sm">
-                  B2C — Peternak Perorangan
+                  B2C Peternak
                 </div>
               </div>
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-emerald-800 shrink-0 ml-2">
@@ -127,7 +127,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               </ul>
 
               <a
-                href="https://wa.me/6285760199917?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Membeli%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
+                href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Membeli%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] py-4 rounded-2xl font-extrabold text-sm transition-all duration-300 group-hover:shadow-[0_0_28px_rgba(255,255,255,0.38)]"
@@ -156,7 +156,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
                 <span className="text-2xl font-bold text-emerald-400">Rp 100.000</span>
                 <span className="block text-emerald-400/80 text-sm mt-1">/ kunjungan servis</span>
               </div>
-              
+
               <ul className="space-y-4 flex-1 mb-10">
                 {[
                   'Tersedia untuk seluruh pengguna unit MicroCell',
@@ -172,7 +172,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               </ul>
 
               <a
-                href="https://wa.me/6285760199917?text=Halo%20Admin%20MicroCell%2C%20saya%20ingin%20mendaftar%20*Layanan%20Instalasi%20%26%20After-Sales%20Service*.%20Mohon%20informasi%20lebih%20lanjut."
+                href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20ingin%20mendaftar%20*Layanan%20Instalasi%20%26%20After-Sales%20Service*.%20Mohon%20informasi%20lebih%20lanjut."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.18)]"

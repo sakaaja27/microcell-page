@@ -29,7 +29,7 @@ export default function Header({ onOpenSurvey, onOpenSimulator }: HeaderProps) {
         ? 'py-3 bg-emerald-950/95 backdrop-blur-md shadow-lg border-b border-emerald-500/10' 
         : 'py-5 bg-transparent border-b border-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between md:justify-center md:gap-12 lg:gap-20">
         
         {/* Brand Logo */}
         <a href="#" className="flex items-center gap-2 group">
@@ -58,23 +58,6 @@ export default function Header({ onOpenSurvey, onOpenSimulator }: HeaderProps) {
           </a>
         </div>
 
-        {/* Action Buttons */}
-        <div className="hidden md:flex items-center gap-4">
-          {/* <button 
-            onClick={onOpenSimulator}
-            className="flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-5 py-2 text-xs font-bold text-emerald-300 hover:bg-emerald-500/10 transition-all duration-200"
-          >
-            <Smartphone size={14} className="text-emerald-400" />
-            Buka IoT Demo
-          </button> */}
-          
-          <button 
-            onClick={onOpenSurvey}
-            className="rounded-full bg-emerald-500 px-6 py-2.5 text-xs font-bold text-[#041706] hover:bg-emerald-400 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95 transition-all duration-200"
-          >
-            Mulai Sekarang
-          </button>
-        </div>
 
         {/* Mobile Hamburger Trigger */}
         <button 
@@ -127,28 +110,7 @@ export default function Header({ onOpenSurvey, onOpenSimulator }: HeaderProps) {
             </a>
           </div>
 
-          <div className="space-y-4 pb-12">
-            <button 
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenSimulator();
-              }}
-              className="w-full flex items-center justify-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/40 py-3.5 text-sm font-bold text-emerald-300"
-            >
-              <Smartphone size={16} className="text-emerald-400" />
-              Buka IoT Demo
-            </button>
-            
-            <button 
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenSurvey();
-              }}
-              className="w-full rounded-xl bg-emerald-500 py-3.5 text-sm font-bold text-[#041706]"
-            >
-              Mulai Sekarang
-            </button>
-          </div>
+          
         </div>
       )}
     </nav>

@@ -10,13 +10,17 @@ export default function FAQ() {
       answer: 'Sistem Microbial Fuel Cell (MFC) MicroCell dirancang untuk ketahanan jangka panjang hingga 8-10 tahun dengan perawatan minimal. Kompartemen anoda dan katoda menggunakan bahan komposit tahan korosi, sementara biofilm koloni bakteri memiliki kemampuan meregenerasi populasinya sendiri secara alami selama asupan bahan organik dari limbah cair tetap terjaga harian.',
     },
     {
-      question: 'Apakah ada bau yang tidak sedap selama proses konversi?',
-      answer: 'Sama sekali tidak. Proses biodegradasi limbah organik di ruang anoda berjalan dalam kondisi tertutup rapat tanpa udara (anaerobik). Karakteristik bioreaktor tertutup ini justru menurunkan kadar hidrogen sulfida dan senyawa volatil bau lainnya secara drastis sebesar 92%, sehingga limbah yang dikeluarkan dari sistem tidak lagi mengeluarkan aroma kotoran mentah yang menyengat.',
+      question: 'Berapa lama waktu yang dibutuhkan agar sistem dapat bekerja secara optimal?',
+      answer: 'Setelah instalasi awal, sistem membutuhkan waktu sekitar 1–3 minggu masa inkubasi bagi koloni bakteri dalam biofilm untuk membangun densitas sel yang optimal dan stabil. Selama periode ini, produksi tegangan akan meningkat secara bertahap seiring pertumbuhan komunitas mikroba. Setelah masa inkubasi selesai, sistem akan beroperasi secara mandiri dan berkelanjutan dengan produksi listrik yang stabil dan dapat diprediksi, tergantung pada volume dan komposisi limbah yang dialirkan harian.'
     },
+    // {
+    //   question: 'Bagaimana jika saya berada di luar wilayah Jember? Apakah MicroCell dapat dikirim dan dipasang?',
+    //   answer: 'Tentu saja bisa! Meskipun MicroCell dirancang khusus untuk peternak di wilayah Jember, tim kami menyediakan layanan pengiriman unit ke luar kota atau bahkan provinsi dengan kemasan khusus yang aman untuk transport. Untuk proses instalasi awal di lokasi baru, kami dapat memandu tim teknisi lokal atau petugas peternakan Anda melalui video call troubleshooting dan panduan instalasi jarak jauh yang terstruktur, memastikan sistem tetap bekerja optimal sejak hari pertama.'
+    // },
     {
-      question: 'Apakah sistem bisa dipasang di dataran tinggi yang berhawa dingin?',
-      answer: 'Ya, modul MicroCell dilengkapi dengan pelindung termal pasif pintar dan sensor suhu terintegrasi. Hal ini menjaga suhu operasi mikroba tetap konstan dalam rentang mesofilik ideal (30°C hingga 38°C) meskipun suhu lingkungan di dataran tinggi atau pegunungan menurun tajam pada malam hari.',
-    },
+      question: 'Apakah sistem sulit untuk dioperasikan?',
+      answer: 'Sama sekali tidak! Sistem MicroCell dirancang untuk kemudahan operasional bagi peternak. Setelah proses instalasi awal selesai dan sistem mencapai tahap inkubasi optimal, operasional harian hanya membutuhkan aktivitas sederhana yang terintegrasi dengan rutinitas peternakan: memasukkan limbah ternak ke dalam kompartemen anoda. Tidak ada tombol yang perlu ditekan atau parameter elektrik yang perlu diatur secara rutin. Sistem bekerja secara mandiri dan berkelanjutan.'
+    }
   ];
 
   const toggleAccordion = (index: number) => {

@@ -120,21 +120,23 @@ export default function Benefits({ onOpenSurvey }: BenefitsProps) {
         </div> */}
 
         {/* CTA Banner */}
-        <div className="bg-[#0A2F1D] rounded-full px-8 py-6 md:px-12 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl mx-auto max-w-5xl">
+        <div className="bg-[#0A2F1D] rounded-3xl md:rounded-full px-6 py-8 md:px-12 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl mx-auto max-w-5xl">
           <div className="text-center md:text-left">
-            <h3 className="font-sans text-xl md:text-2xl font-bold text-white mb-1">
-              Siap Mengubah Limbah Menjadi Berkah?
+            <h3 className="font-sans text-xl md:text-2xl font-bold text-white mb-2 md:mb-1">
+              Siap Mengubah Limbah Menjadi Energi Listrik?
             </h3>
             <p className="text-emerald-200/80 text-sm md:text-base">
               Konsultasikan instalasi MicroCell untuk peternakan Anda sekarang.
             </p>
           </div>
-          <button 
-            onClick={onOpenSurvey}
-            className="whitespace-nowrap bg-emerald-300 hover:bg-emerald-400 text-emerald-950 font-bold px-8 py-4 rounded-full transition-colors duration-300 flex-shrink-0 shadow-lg shadow-emerald-400/20"
+          <a 
+            href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20mengkonsultasikan%20instalasi%20MicroCell%20di%20peternakan%20saya.%20Mohon%20informasi%20lebih%20lanjut."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full md:w-auto text-center whitespace-nowrap bg-emerald-300 hover:bg-emerald-400 text-emerald-950 font-bold px-8 py-4 rounded-full transition-colors duration-300 flex-shrink-0 shadow-lg shadow-emerald-400/20"
           >
-            Hubungi Tim Ahli
-          </button>
+            Hubungi Kami
+          </a>
         </div>
 
       </div>
