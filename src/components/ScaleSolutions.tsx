@@ -1,236 +1,194 @@
-import React, { useState } from 'react';
-import { Check, Star } from 'lucide-react';
+import React from 'react';
+import { CheckCircle2, RefreshCw, PawPrint, Wrench, Star } from 'lucide-react';
 
 interface ScaleSolutionsProps {
   onOpenSurvey: () => void;
 }
 
 export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
-  const [activeTab, setActiveTab] = useState<'b2c' | 'b2b'>('b2c');
-
   return (
-    <section className="py-24 bg-[#F0FDF4] text-[#041706] overflow-hidden" id="products">
-      <div className="max-w-6xl mx-auto px-6">
-        
+    <section className="py-24 bg-white text-emerald-950" id="products">
+      <div className="max-w-7xl mx-auto px-6">
+
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="text-[10px] bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-3 py-1 rounded-full font-bold uppercase tracking-widest">
-            Pilihan Implementasi
-          </span>
-          <h2 className="mt-4 font-sans text-3xl sm:text-4xl font-extrabold text-emerald-950 tracking-tight mb-6">
-            Solusi Sesuai Skala
-          </h2>
-          
-          {/* Tab Button Selector */}
-          <div className="inline-flex bg-white p-1.5 rounded-full shadow-sm border border-emerald-500/10">
-            <button 
-              onClick={() => setActiveTab('b2c')}
-              className={`px-8 py-2.5 rounded-full font-sans text-xs font-bold transition-all duration-300 cursor-pointer ${
-                activeTab === 'b2c' 
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/15' 
-                  : 'text-emerald-800 hover:text-emerald-950'
-              }`}
-            >
-              Peternak Individu (B2C)
-            </button>
-            <button 
-              onClick={() => setActiveTab('b2b')}
-              className={`px-8 py-2.5 rounded-full font-sans text-xs font-bold transition-all duration-300 cursor-pointer ${
-                activeTab === 'b2b' 
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/15' 
-                  : 'text-emerald-800 hover:text-emerald-950'
-              }`}
-            >
-              Koperasi &amp; Institusi (B2B)
-            </button>
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center border border-emerald-500/20 bg-emerald-50 rounded-full px-4 py-1.5 mb-6">
+            <span className="text-xs font-bold text-emerald-700 tracking-widest uppercase">Produk & Layanan</span>
           </div>
+          <h2 className="font-sans text-4xl md:text-5xl font-extrabold text-emerald-950 tracking-tight mb-6 max-w-4xl mx-auto leading-tight">
+            Pilih Skema yang Sesuai Kebutuhanmu
+          </h2>
+          <p className="font-sans text-base md:text-lg text-emerald-800 max-w-3xl mx-auto leading-relaxed">
+            MicroCell tersedia dalam tiga skema kepemilikan dan layanan — fleksibel sesuai skala peternakan Anda.
+          </p>
         </div>
 
-        {/* Tab Content Cards container */}
-        <div className="max-w-4xl mx-auto mb-16">
-          
-          {/* B2C Layout Container */}
-          {activeTab === 'b2c' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up">
-              
-              {/* Option 1: Jual Putus */}
-              <div className="bg-white p-8 md:p-10 rounded-[32px] border border-emerald-500/10 shadow-sm flex flex-col justify-between">
-                <div>
-                  <span className="text-[10px] text-emerald-600 font-bold tracking-widest uppercase">Kategori Mandiri</span>
-                  <h3 className="font-sans text-2xl font-bold text-emerald-950 mt-1 mb-4">Jual Putus</h3>
-                  <p className="text-sm text-emerald-800 leading-relaxed font-sans mb-8">
-                    Kepemilikan penuh sistem reaktor MicroCell dengan modul siap pakai bergaransi resmi untuk pemenuhan kebutuhan energi harian rumah tangga.
-                  </p>
-                  
-                  <ul className="space-y-4 mb-10">
-                    <li className="flex items-center gap-3 text-sm text-emerald-950">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Garansi perangkat utama 3 tahun</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm text-emerald-950">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Buku panduan &amp; kit perakitan mandiri</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm text-emerald-950">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Free Starter Pack bakteri starter</span>
-                    </li>
-                  </ul>
-                </div>
+        {/* 3 Columns Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 items-stretch">
 
-                <button 
-                  onClick={onOpenSurvey}
-                  className="w-full border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-200 cursor-pointer"
-                >
-                  Pesan Sekarang
-                </button>
+          {/* Card 1: Sewa Alat */}
+          <div className="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-800/50 bg-[#0A2F1D] p-8 shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:border-emerald-500/60 hover:shadow-[0_28px_70px_rgba(4,55,34,0.28)] md:p-10">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/0 via-emerald-400/0 to-emerald-400/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:from-emerald-400/8 group-hover:via-transparent group-hover:to-transparent" />
+            <div className="flex justify-between items-start mb-8">
+              <div className="bg-emerald-200 text-emerald-950 font-bold text-xs px-4 py-1.5 rounded-full">
+                Sewa Alat
               </div>
-
-              {/* Option 2: Paket Maintenance (Highlighted Card) */}
-              <div className="bg-emerald-950 text-white p-8 md:p-10 rounded-[32px] border border-emerald-500/20 shadow-xl relative flex flex-col justify-between">
-                <div className="absolute top-6 right-6 text-amber-400">
-                  <Star size={24} fill="currentColor" />
-                </div>
-
-                <div>
-                  <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase">Paket Bebas Repot</span>
-                  <h3 className="font-sans text-2xl font-bold text-white mt-1 mb-4">Paket Maintenance</h3>
-                  <p className="text-sm text-emerald-200/80 leading-relaxed font-sans mb-8">
-                    Layanan terpadu menyeluruh mencakup pemeliharaan reaktivitas bakteri periodik, penanganan teknis, serta pembaruan saringan reaktor otomatis.
-                  </p>
-                  
-                  <ul className="space-y-4 mb-10">
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Kunjungan teknisi berkala tiap 4 bulan</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Monitoring performa bioreaktor online</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Garansi penggantian suku cadang penuh</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <button 
-                  onClick={onOpenSurvey}
-                  className="w-full bg-emerald-500 hover:bg-emerald-400 text-[#041706] py-4 rounded-2xl font-bold text-sm transition-all duration-200"
-                >
-                  Pilih Layanan Maintenance
-                </button>
+              <div className="w-10 h-10 bg-emerald-900/50 rounded-full flex items-center justify-center text-emerald-400 shrink-0 ml-2">
+                <RefreshCw size={18} />
               </div>
-
             </div>
-          )}
 
-          {/* B2B Layout Container */}
-          {activeTab === 'b2b' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up">
-              
-              {/* Option 1: Paket B2B */}
-              <div className="bg-white p-8 md:p-10 rounded-[32px] border border-emerald-500/10 shadow-sm flex flex-col justify-between">
-                <div>
-                  <span className="text-[10px] text-emerald-600 font-bold tracking-widest uppercase">Koperasi / Desa</span>
-                  <h3 className="font-sans text-2xl font-bold text-emerald-950 mt-1 mb-4">Paket B2B Komunal</h3>
-                  <p className="text-sm text-emerald-800 leading-relaxed font-sans mb-8">
-                    Pemasangan unit reaktor raksasa terintegrasi untuk peternakan komunal, koperasi desa, atau badan usaha pertanian dengan pasokan daya listrik tinggi.
-                  </p>
-                  
-                  <ul className="space-y-4 mb-10">
-                    <li className="flex items-center gap-3 text-sm text-emerald-950">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Rancangan teknis kustom gratis</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm text-emerald-950">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Integrasi Smart Central Dashboard IoT</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm text-emerald-950">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Pelatihan operator teknis lokal desa</span>
-                    </li>
-                  </ul>
-                </div>
+            <div className="relative z-10 flex flex-1 flex-col">
+              <h3 className="font-sans text-2xl font-bold text-white mb-2 pr-4">Sewa Unit MicroCell</h3>
+              <p className="text-emerald-200/80 text-sm mb-6">Tanpa modal besar di awal</p>
 
-                <button 
-                  onClick={onOpenSurvey}
-                  className="w-full border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-200 cursor-pointer"
-                >
-                  Hubungi Tim Ahli
-                </button>
+              <div className="mb-8">
+                <span className="text-2xl font-bold text-emerald-400">Rp 300.000</span>
+                <span className="block text-emerald-400/80 text-sm mt-1">/ bulan</span>
               </div>
 
-              {/* Option 2: Paket Kolaborasi CSR */}
-              <div className="bg-emerald-950 text-white p-8 md:p-10 rounded-[32px] border border-emerald-500/20 shadow-xl flex flex-col justify-between">
-                <div>
-                  <span className="text-[10px] text-emerald-400 font-bold tracking-widest uppercase">Program ESG &amp; CSR</span>
-                  <h3 className="font-sans text-2xl font-bold text-white mt-1 mb-4">Paket Kolaborasi ESG</h3>
-                  <p className="text-sm text-emerald-200/80 leading-relaxed font-sans mb-8">
-                    Kemitraan strategis untuk perusahaan pelaksana CSR yang ingin mendanai elektrifikasi terbarukan berbasis kearifan lokal di desa sasaran.
-                  </p>
-                  
-                  <ul className="space-y-4 mb-10">
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Laporan dampak kuantitatif reduksi emisi</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Branding eksklusif kemitraan lingkungan</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-sm">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                        <Check size={14} strokeWidth={3} />
-                      </div>
-                      <span>Sertifikat kontribusi dekarbonisasi</span>
-                    </li>
-                  </ul>
-                </div>
+              <ul className="space-y-4 flex-1 mb-10">
+                {[
+                  'Tidak perlu membeli unit secara penuh',
+                  'Perangkat tetap dirawat dan dikelola tim kami',
+                  'Cocok untuk peternak yang ingin coba dulu',
+                  'Kontrak fleksibel sesuai kebutuhan',
+                  'Termasuk instalasi awal dan pendampingan'
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-emerald-400 mt-0.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                    <span className="text-sm text-emerald-100/90 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
 
-                <button 
-                  onClick={onOpenSurvey}
-                  className="w-full bg-emerald-500 hover:bg-emerald-400 text-[#041706] py-4 rounded-2xl font-bold text-sm transition-all duration-200"
-                >
-                  Mulai Kemitraan Strategis
-                </button>
-              </div>
-
+              <a
+                href="https://wa.me/6285760199917?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Menyewa%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.18)]"
+              >
+                Hubungi Kami
+              </a>
             </div>
-          )}
+          </div>
+
+          {/* Card 2: Beli Unit MicroCell (Highlighted) */}
+          <div className="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-500/30 bg-[#115E2E] p-8 shadow-2xl transition-all duration-300 ease-out hover:-translate-y-6 hover:scale-[1.01] hover:border-emerald-300/70 hover:shadow-[0_32px_80px_rgba(16,185,129,0.28)] md:p-10 lg:-translate-y-4">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:from-white/10 group-hover:via-transparent group-hover:to-transparent" />
+            <div className="relative z-10 flex justify-between items-start mb-6">
+              <div>
+                <div className="flex items-center gap-1.5 text-amber-300 font-bold text-xs mb-3">
+                  <Star size={14} fill="currentColor" /> Paling Diminati
+                </div>
+                <div className="border border-white/30 bg-white/10 text-white font-bold text-xs px-4 py-1.5 rounded-full inline-block backdrop-blur-sm">
+                  B2C — Peternak Perorangan
+                </div>
+              </div>
+              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-emerald-800 shrink-0 ml-2">
+                <PawPrint size={18} fill="currentColor" />
+              </div>
+            </div>
+
+            <div className="relative z-10 flex flex-1 flex-col">
+              <h3 className="font-sans text-2xl font-bold text-white mb-2">Beli Unit MicroCell</h3>
+              <p className="text-emerald-100/90 text-sm mb-6">Kepemilikan penuh, sekali bayar</p>
+
+              <div className="mb-6">
+                <span className="text-2xl font-bold text-emerald-300">Rp 6.000.000</span>
+                <span className="block text-emerald-300/80 text-sm mt-1">/ unit · bayar tunai</span>
+              </div>
+
+              <div className="mb-8 border-t border-emerald-400/30 pt-4">
+                <span className="text-[10px] text-emerald-300/80 font-bold tracking-wider mb-2 block uppercase">ATAU</span>
+                <div className="flex justify-between items-center text-white mb-2">
+                  <span className="font-bold text-sm md:text-base">Rp 500.000</span>
+                  <span className="text-xs text-emerald-100/70">/ bln (12 bln)</span>
+                </div>
+                <div className="flex justify-between items-center text-white">
+                  <span className="font-bold text-sm md:text-base">Rp 1.000.000</span>
+                  <span className="text-xs text-emerald-100/70">/ bln (6 bln)</span>
+                </div>
+              </div>
+
+              <ul className="space-y-4 flex-1 mb-10">
+                {[
+                  'Unit MicroCell menjadi milik Anda sepenuhnya',
+                  'Target: peternak sapi skala 10-100 ekor',
+                  'Garansi hardware 1 tahun',
+                  'Instalasi awal termasuk dalam paket',
+                  'Pendampingan teknis di awal penggunaan'
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-white mt-0.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                    <span className="text-sm text-emerald-50 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="https://wa.me/6285760199917?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Membeli%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] py-4 rounded-2xl font-extrabold text-sm transition-all duration-300 group-hover:shadow-[0_0_28px_rgba(255,255,255,0.38)]"
+              >
+                Beli Sekarang
+              </a>
+            </div>
+          </div>
+
+          {/* Card 3: Layanan & After-Sales */}
+          <div className="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-800/50 bg-[#0A2F1D] p-8 shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:border-emerald-500/60 hover:shadow-[0_28px_70px_rgba(4,55,34,0.28)] md:p-10">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/0 via-emerald-400/0 to-emerald-400/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-hover:from-emerald-400/8 group-hover:via-transparent group-hover:to-transparent" />
+            <div className="relative z-10 flex justify-between items-start mb-8">
+              <div className="bg-white/10 border border-white/20 text-emerald-100 font-bold text-xs px-4 py-1.5 rounded-full inline-block">
+                Untuk Semua Pembeli & Penyewa
+              </div>
+              <div className="w-10 h-10 bg-emerald-900/50 rounded-full flex items-center justify-center text-emerald-400 shrink-0 ml-2">
+                <Wrench size={18} />
+              </div>
+            </div>
+
+            <div className="relative z-10 flex flex-1 flex-col">
+              <h3 className="font-sans text-2xl font-bold text-white mb-2 pr-4">Layanan Instalasi & After-Sales Service</h3>
+
+              <div className="mb-2 mt-4">
+                <span className="text-2xl font-bold text-emerald-400">Rp 100.000</span>
+                <span className="block text-emerald-400/80 text-sm mt-1">/ kunjungan servis</span>
+              </div>
+              
+              <ul className="space-y-4 flex-1 mb-10">
+                {[
+                  'Tersedia untuk seluruh pengguna unit MicroCell',
+                  'Kunjungan teknisi prioritas ke lokasi',
+                  'Cek dan penggantian komponen',
+                  'Laporan kondisi sistem setiap kunjungan'
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-emerald-400 mt-0.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
+                    <span className="text-sm text-emerald-100/90 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="https://wa.me/6285760199917?text=Halo%20Admin%20MicroCell%2C%20saya%20ingin%20mendaftar%20*Layanan%20Instalasi%20%26%20After-Sales%20Service*.%20Mohon%20informasi%20lebih%20lanjut."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.18)]"
+              >
+                Hubungi Kami
+              </a>
+            </div>
+          </div>
 
         </div>
 
-        {/* Horizontal Specification Info Bar */}
-        <div className="bg-white border border-emerald-500/10 rounded-3xl p-6 md:p-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 md:gap-4 shadow-sm">
-          
+        <div className="bg-white border border-emerald-500 rounded-3xl p-6 md:p-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-5 shadow-md shadow-emerald-900/5 mt-8 w-full">
+
           <div className="flex flex-col">
             <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Bahan Baku</span>
-            <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Limbah Cair Ternak</span>
+            <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Limbah Ternak</span>
           </div>
 
           <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
@@ -245,12 +203,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
 
           <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
             <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Penyimpanan</span>
-            <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">LiFePO4 Optimized</span>
-          </div>
-
-          <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">
-            <span className="text-[9px] text-emerald-500 uppercase tracking-wider font-bold">Konektivitas</span>
-            <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Bluetooth / Wi-Fi</span>
+            <span className="text-xs sm:text-sm font-bold text-emerald-950 mt-1 font-sans">Baterai 12V</span>
           </div>
 
           <div className="flex flex-col border-l border-emerald-100 pl-4 md:pl-2">

@@ -194,13 +194,13 @@ export default function Hero({ onOpenSurvey, onOpenSimulator, onOpenCalculator }
           >
             Konsultasi Gratis
           </a>
-          <button 
-            onClick={onOpenCalculator}
+          <a 
+            href="#how-it-works"
             className="flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-4 rounded-full font-bold text-sm hover:bg-white/10 active:scale-95 transition-all duration-200"
           >
             <Zap size={16} className="text-emerald-400" />
             Cara Kerja MicroCell
-          </button>
+          </a>
         </div>
         {/* Glassmorphism Specification Specs Block */}
         {/* <div className="glass-card rounded-[32px] p-6 md:p-8 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 border border-emerald-500/10">

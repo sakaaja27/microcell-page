@@ -30,7 +30,7 @@ export default function HowItWorks() {
       num: '05',
       emoji: '🔋',
       title: 'Baterai Penyimpan',
-      desc: 'Kelebihan daya disimpan aman ke dalam bank baterai LiFePO4 pintar untuk mensuplai beban puncak listrik, terutama di malam hari.',
+        desc: 'Daya listrik yang dihasilkan disimpan dalam bank baterai untuk mensuplai beban listrik.',
     },
     {
       num: '06',
