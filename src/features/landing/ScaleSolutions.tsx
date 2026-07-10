@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle2, RefreshCw, PawPrint, Wrench, Star } from 'lucide-react';
+import { generateWhatsAppLink } from '../../config/constants';
 
 interface ScaleSolutionsProps {
   onOpenSurvey: () => void;
@@ -63,7 +64,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               </ul>
 
               <a
-                href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Menyewa%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
+                href={generateWhatsAppLink('RENTAL')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.18)]"
@@ -127,7 +128,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               </ul>
 
               <a
-                href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20*Membeli%20Unit%20MicroCell*.%20Mohon%20informasi%20lebih%20lanjut."
+                href={generateWhatsAppLink('PURCHASE')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] py-4 rounded-2xl font-extrabold text-sm transition-all duration-300 group-hover:shadow-[0_0_28px_rgba(255,255,255,0.38)]"
@@ -172,7 +173,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               </ul>
 
               <a
-                href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20ingin%20mendaftar%20*Layanan%20Instalasi%20%26%20After-Sales%20Service*.%20Mohon%20informasi%20lebih%20lanjut."
+                href={generateWhatsAppLink('SERVICE')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 group-hover:border-emerald-400 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.18)]"

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { Play, Sparkles, Smartphone, Sliders, Settings, Layers, Zap } from 'lucide-react';
+import { ArrowRight, Leaf, Cpu, CheckCircle2, ShieldCheck, Zap, Activity } from 'lucide-react';
+import { generateWhatsAppLink } from '../../config/constants';
 
 interface HeroProps {
   onOpenSurvey: () => void;
@@ -187,7 +188,7 @@ export default function Hero({ onOpenSurvey, onOpenSimulator, onOpenCalculator }
         {/* Call to Actions */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <a 
-            href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20dan%20ingin%20berkonsultasi%20mengenai%20pemasangan%20sistem%20MicroCell."
+            href={generateWhatsAppLink('GENERAL_INQUIRY')}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#16A34A] text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-emerald-500 hover:shadow-[0_0_20px_rgba(22,163,74,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center"

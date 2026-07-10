@@ -1,4 +1,5 @@
 import React from 'react';
+import { generateWhatsAppLink } from '../../config/constants';
 import { Recycle, Zap, Globe, ClipboardList, CheckCircle2 } from 'lucide-react';
 
 interface BenefitsProps {
@@ -130,7 +131,7 @@ export default function Benefits({ onOpenSurvey }: BenefitsProps) {
             </p>
           </div>
           <a 
-            href="https://wa.me/6285812749419?text=Halo%20Admin%20MicroCell%2C%20saya%20tertarik%20untuk%20mengkonsultasikan%20instalasi%20MicroCell%20di%20peternakan%20saya.%20Mohon%20informasi%20lebih%20lanjut."
+            href={generateWhatsAppLink('CONSULTATION')}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full md:w-auto text-center whitespace-nowrap bg-emerald-300 hover:bg-emerald-400 text-emerald-950 font-bold px-8 py-4 rounded-full transition-colors duration-300 flex-shrink-0 shadow-lg shadow-emerald-400/20"
