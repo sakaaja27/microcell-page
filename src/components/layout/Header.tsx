@@ -71,7 +71,7 @@ export default function Header({ onOpenSurvey, onOpenSimulator }: HeaderProps) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed top-[64px] left-0 right-0 bottom-0 bg-[#041706]/98 backdrop-blur-lg z-30 p-6 border-t border-emerald-500/10 flex flex-col justify-between">
+        <div className="md:hidden absolute top-full left-0 w-full h-[100vh] bg-[#041706] z-50 p-6 border-t border-emerald-500/10 flex flex-col">
           <div className="space-y-6">
             <a 
               href="#about" 
