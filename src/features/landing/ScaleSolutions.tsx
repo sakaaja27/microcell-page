@@ -44,7 +44,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               <p className="text-emerald-200/80 text-sm mb-6">Tanpa modal besar di awal</p>
 
               <div className="mb-8">
-                <span className="text-2xl font-bold text-emerald-400">Rp 300.000</span>
+                <span className="text-2xl font-bold text-emerald-400">Rp 700.000</span>
                 <span className="block text-emerald-400/80 text-sm mt-1">/ bulan</span>
               </div>
 
@@ -154,7 +154,7 @@ export default function ScaleSolutions({ onOpenSurvey }: ScaleSolutionsProps) {
               <h3 className="font-sans text-2xl font-bold text-white mb-2 pr-4">Layanan Instalasi & After-Sales Service</h3>
 
               <div className="mb-2 mt-4">
-                <span className="text-2xl font-bold text-emerald-400">Rp 100.000</span>
+                <span className="text-2xl font-bold text-emerald-400">Rp 300.000</span>
                 <span className="block text-emerald-400/80 text-sm mt-1">/ kunjungan servis</span>
               </div>
 
