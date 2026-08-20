@@ -24,7 +24,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/admin');
+            return redirect()->intended(Auth::user()->role === 'admin' ? '/admin' : '/riwayat-transaksi');
         }
 
         return back()->withErrors([
@@ -43,18 +43,27 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'max:20'],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'role' => 'customer',
+        ]);
+
+        \App\Models\Customer::create([
+            'user_id' => $user->id,
+            'nama' => $user->name,
+            'email' => $user->email,
+            'phone' => $validated['phone'],
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect('/admin');
+        return redirect('/riwayat-transaksi');
     }
 
     public function logout(Request $request)

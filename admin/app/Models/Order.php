@@ -22,4 +22,9 @@ class Order extends Model
     {
         return $this->belongsTo(Schema::class, 'schema_id');
     }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
 }

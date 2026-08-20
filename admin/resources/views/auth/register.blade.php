@@ -53,6 +53,17 @@
                     />
                 </div>
                 <div>
+                    <label class="block text-sm font-medium text-emerald-100 mb-1.5">No WhatsApp</label>
+                    <input
+                        type="text"
+                        name="phone"
+                        value="{{ old('phone') }}"
+                        class="w-full bg-[#041706]/50 border border-emerald-500/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent block p-3 transition-all outline-none"
+                        placeholder="08xxxxxxxxx"
+                        required
+                    />
+                </div>
+                <div>
                     <label class="block text-sm font-medium text-emerald-100 mb-1.5">Password</label>
                     <input
                         type="password"

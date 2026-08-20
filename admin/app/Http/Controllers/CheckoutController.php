@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Order;
+use App\Models\PaymentMethod;
+use App\Models\Schema;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class CheckoutController extends Controller
+{
+    public function index(Schema $schema)
+    {
+        if ($schema->status !== 'Aktif') {
+            return redirect('/')->with('error', 'Skema tidak aktif.');
+        }
+
+        $paymentMethods = PaymentMethod::all();
+        
+        return view('customer.checkout', compact('schema', 'paymentMethods'));
+    }
+
+    public function store(Request $request, Schema $schema)
+    {
+        if ($schema->status !== 'Aktif') {
+            return redirect('/')->with('error', 'Skema tidak aktif.');
+        }
+
+        $validated = $request->validate([
+            'qty' => ['required', 'integer', 'min:1'],
+            'payment_method_id' => ['required', 'exists:payment_methods,id'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+        ]);
+
+        $user = Auth::user();
+        $customer = $user->customer;
+
+        if (!$customer) {
+            // Fallback just in case they don't have customer profile yet
+            $customer = \App\Models\Customer::create([
+                'user_id' => $user->id,
+                'nama' => $user->name,
+                'email' => $user->email,
+                'phone' => '0000000000',
+            ]);
+        }
+
+        $path = $request->file('image')->store('bukti', 'public');
+        $imageUrl = asset('storage/' . $path);
+
+        $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
+        $seq = $lastId ? ((int) preg_replace('/\D/', '', explode('-', $lastId)[0]) + 1) : 1;
+
+        Order::create([
+            'id' => sprintf('MC%03d-%d-%d', $seq, now()->day, now()->year),
+            'customer_id' => $customer->id,
+            'schema_id' => $schema->id,
+            'payment_method_id' => $validated['payment_method_id'],
+            'customer' => $customer->nama,
+            'skema' => $schema->skema,
+            'qty' => $validated['qty'],
+            'total' => $schema->harga * $validated['qty'],
+            'status' => 'Menunggu',
+            'tanggal' => now()->format('Y-m-d'),
+            'image' => $imageUrl,
+        ]);
+
+        return redirect()->route('customer.history')->with('success', 'Pesanan berhasil dibuat. Kami akan segera memprosesnya.');
+    }
+
+    public function history()
+    {
+        $user = Auth::user();
+        if ($user->role === 'admin') {
+            return redirect('/admin');
+        }
+        
+        $customer = $user->customer;
+        $orders = $customer ? Order::with(['schema', 'paymentMethod'])->where('customer_id', $customer->id)->orderBy('created_at', 'desc')->get() : collect();
+
+        return view('customer.history', compact('orders'));
+    }
+}

@@ -34,8 +34,19 @@
             </div>
 
             <div class="hidden md:flex items-center gap-4">
-                <a href="{{ route('login') }}" class="text-sm font-bold text-white hover:text-emerald-400 transition-colors">Login</a>
-                <a href="{{ route('register') ?? '#' }}" class="text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-emerald-950 px-5 py-2 rounded-full transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">Register</a>
+                @auth
+                    <a href="{{ route('customer.history') }}" class="text-sm font-bold text-white hover:text-emerald-400 transition-colors">Riwayat Transaksi</a>
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('admin.dashboard') }}" class="text-sm font-bold text-emerald-200 hover:text-white transition-colors">Admin Panel</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="text-sm font-bold bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-5 py-2 rounded-full transition-all">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-sm font-bold text-white hover:text-emerald-400 transition-colors">Login</a>
+                    <a href="{{ route('register') }}" class="text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-emerald-950 px-5 py-2 rounded-full transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">Register</a>
+                @endauth
             </div>
 
             <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 text-emerald-200 md:hidden hover:text-white focus:outline-none">
@@ -54,8 +65,19 @@
                 <a href="#faq" @click="mobileMenuOpen = false" class="block text-lg font-bold text-emerald-200 hover:text-white">FAQ</a>
             </div>
             <div class="mt-8 space-y-4">
-                <a href="{{ route('login') }}" class="block w-full text-center py-3 rounded-xl font-bold text-white bg-emerald-900/50 border border-emerald-500/30 hover:bg-emerald-800/60 transition-colors">Login</a>
-                <a href="{{ route('register') ?? '#' }}" class="block w-full text-center py-3 rounded-xl font-bold text-emerald-950 bg-emerald-500 hover:bg-emerald-400 transition-colors">Register</a>
+                @auth
+                    <a href="{{ route('customer.history') }}" class="block w-full text-center py-3 rounded-xl font-bold text-emerald-100 bg-[#0A2F1D] border border-emerald-800/50 hover:bg-emerald-900/40 transition-colors">Riwayat Transaksi</a>
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('admin.dashboard') }}" class="block w-full text-center py-3 rounded-xl font-bold text-emerald-100 bg-[#0A2F1D] border border-emerald-800/50 hover:bg-emerald-900/40 transition-colors">Admin Panel</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}" class="block">
+                        @csrf
+                        <button type="submit" class="w-full text-center py-3 rounded-xl font-bold text-red-400 bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 transition-colors">Logout</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="block w-full text-center py-3 rounded-xl font-bold text-white bg-emerald-900/50 border border-emerald-500/30 hover:bg-emerald-800/60 transition-colors">Login</a>
+                    <a href="{{ route('register') }}" class="block w-full text-center py-3 rounded-xl font-bold text-emerald-950 bg-emerald-500 hover:bg-emerald-400 transition-colors">Register</a>
+                @endauth
             </div>
         </div>
     </nav>
@@ -306,7 +328,7 @@
                                         @endforeach
                                     @endif
                                 </ul>
-                                <a href="{{ $schema->cta_link ?? '#' }}" class="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 py-4 rounded-2xl font-extrabold text-sm transition-all duration-300">{{ $schema->cta_text ?? 'Hubungi Kami' }}</a>
+                                <a href="{{ route('customer.checkout', $schema) }}" class="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 py-4 rounded-2xl font-extrabold text-sm transition-all duration-300">{{ $schema->cta_text ?? 'Hubungi Kami' }}</a>
                             </div>
                         </div>
                     @else
@@ -348,7 +370,7 @@
                                         @endforeach
                                     @endif
                                 </ul>
-                                <a href="{{ $schema->cta_link ?? '#' }}" class="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300">{{ $schema->cta_text ?? 'Hubungi Kami' }}</a>
+                                <a href="{{ route('customer.checkout', $schema) }}" class="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300">{{ $schema->cta_text ?? 'Hubungi Kami' }}</a>
                             </div>
                         </div>
                     @endif

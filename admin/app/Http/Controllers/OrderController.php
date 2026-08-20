@@ -77,6 +77,21 @@ class OrderController extends Controller
             'image' => $validated['image'] ?? $order->image,
         ]);
 
+        if ($validated['status'] === 'Selesai' && $order->schema && $order->schema->satuan === 'Bulan') {
+            \App\Models\Subscription::updateOrCreate(
+                [
+                    'customer_id' => $order->customer_id,
+                    'schema_id' => $order->schema_id,
+                ],
+                [
+                    'order_id' => $order->id,
+                    'status' => 'Aktif',
+                    'started_at' => now(),
+                    'next_billing_date' => now()->addMonth(),
+                ]
+            );
+        }
+
         return back()->with('success', 'Pesanan berhasil diperbarui.');
     }
 
@@ -87,6 +102,21 @@ class OrderController extends Controller
         ]);
 
         $order->update(['status' => $validated['status']]);
+
+        if ($validated['status'] === 'Selesai' && $order->schema && $order->schema->satuan === 'Bulan') {
+            \App\Models\Subscription::updateOrCreate(
+                [
+                    'customer_id' => $order->customer_id,
+                    'schema_id' => $order->schema_id,
+                ],
+                [
+                    'order_id' => $order->id,
+                    'status' => 'Aktif',
+                    'started_at' => now(),
+                    'next_billing_date' => now()->addMonth(),
+                ]
+            );
+        }
 
         return back()->with('success', 'Status pesanan berhasil diperbarui.');
     }

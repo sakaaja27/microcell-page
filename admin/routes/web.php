@@ -24,6 +24,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/riwayat-transaksi', [\App\Http\Controllers\CheckoutController::class, 'history'])->name('customer.history');
+    Route::get('/order/{schema}', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('customer.checkout');
+    Route::post('/order/{schema}', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('customer.checkout.store');
+    
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -58,4 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/agenda', [AgendaController::class, 'store'])->name('admin.agendas.store');
     Route::put('/admin/agenda/{agenda}', [AgendaController::class, 'update'])->name('admin.agendas.update');
     Route::delete('/admin/agenda/{agenda}', [AgendaController::class, 'destroy'])->name('admin.agendas.destroy');
+
+    Route::get('/admin/langganan', [\App\Http\Controllers\SubscriptionController::class, 'index'])->name('admin.subscriptions');
+    Route::post('/admin/langganan/{subscription}/bill', [\App\Http\Controllers\SubscriptionController::class, 'createBill'])->name('admin.subscriptions.bill');
 });

@@ -9,5 +9,23 @@
 </head>
 <body class="bg-white font-sans text-slate-900 antialiased" x-data>
     @yield('content')
+
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>

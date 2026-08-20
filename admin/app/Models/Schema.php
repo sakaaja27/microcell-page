@@ -13,4 +13,9 @@ class Schema extends Model
     {
         return $this->hasMany(Order::class, 'schema_id');
     }
+
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class, 'schema_id');
+    }
 }

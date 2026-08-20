@@ -59,9 +59,7 @@
                                     <button onclick="openOrderModal('{{ $order->id }}', {{ $order->customer_id ?? 'null' }}, {{ $order->schema_id ?? 'null' }}, {{ $order->qty }}, '{{ $order->status }}', '{{ $order->tanggal }}', '{{ $order->image }}')" class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Edit">
                                         <i data-lucide="edit" class="w-4 h-4"></i>
                                     </button>
-                                    <button onclick="openConfirmModal('{{ route('admin.orders.destroy', $order) }}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                    </button>
+                                   
                                 </td>
                             </tr>
                         @endforeach
@@ -254,7 +252,16 @@
         document.getElementById('modalTotal').textContent = btn.dataset.total;
         document.getElementById('modalTanggal').textContent = btn.dataset.tanggal;
         document.getElementById('modalStatus').value = btn.dataset.status;
-        document.getElementById('modalImage').src = btn.dataset.image;
+        
+        const img = document.getElementById('modalImage');
+        if (btn.dataset.image) {
+            img.src = btn.dataset.image;
+            img.parentElement.style.display = 'block';
+        } else {
+            img.src = '';
+            img.parentElement.style.display = 'none';
+        }
+        
         openModal('detailModal');
         lucide.createIcons();
     }

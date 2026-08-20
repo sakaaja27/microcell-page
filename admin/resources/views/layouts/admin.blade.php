@@ -24,6 +24,7 @@
                         ['name' => 'Product', 'icon' => 'package', 'route' => 'admin.products'],
                         ['name' => 'Skema dan Harga', 'icon' => 'tags', 'route' => 'admin.schemas'],
                         ['name' => 'Pesanan', 'icon' => 'shopping-cart', 'route' => 'admin.orders'],
+                        ['name' => 'Langganan', 'icon' => 'calendar-clock', 'route' => 'admin.subscriptions'],
                         ['name' => 'Customer', 'icon' => 'users', 'route' => 'admin.customers'],
                         ['name' => 'Metode Pembayaran', 'icon' => 'credit-card', 'route' => 'admin.payments'],
                         ['name' => 'Agenda', 'icon' => 'calendar', 'route' => 'admin.agendas'],
