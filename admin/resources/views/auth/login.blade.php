@@ -10,7 +10,7 @@
 <body class="bg-[#041706] font-sans">
     <div class="min-h-screen bg-[#041706] flex items-center justify-center p-4">
         <div class="max-w-md w-full bg-emerald-950/40 backdrop-blur-xl border border-emerald-500/20 rounded-3xl p-8 shadow-2xl">
-            <a href="http://localhost:3000" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors mb-8 text-sm font-medium">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors mb-8 text-sm font-medium">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
             </a>
 
@@ -65,7 +65,7 @@
             </form>
 
             <p class="text-center mt-8 text-sm text-emerald-200/60">
-                Belum punya akun? <a href="http://localhost:3000/register" class="text-emerald-400 font-medium hover:text-emerald-300 transition-colors">Daftar disini</a>
+                Belum punya akun? <a href="{{ route('register') }}" class="text-emerald-400 font-medium hover:text-emerald-300 transition-colors">Daftar disini</a>
             </p>
         </div>
     </div>
