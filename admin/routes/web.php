@@ -9,8 +9,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SchemaController;
 use App\Http\Controllers\AgendaController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Schema;
 
-Route::get('/', fn () => view('welcome'))->name('home');
+Route::get('/', function () {
+    $schemas = Schema::where('status', 'Aktif')->get();
+    return view('welcome', compact('schemas'));
+})->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

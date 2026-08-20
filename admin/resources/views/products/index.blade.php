@@ -28,7 +28,7 @@
                         @foreach ($products as $product)
                             <tr class="hover:bg-slate-50/50 transition-colors">
                                 <td class="px-6 py-4 font-medium text-slate-900">{{ $product->nama }}</td>
-                                <td class="px-6 py-4 text-slate-600">{{ $product->spesifikasi }}</td>
+                                <td class="px-6 py-4 text-slate-600 truncate max-w-[250px]">{{ $product->spesifikasi }}</td>
                                 <td class="px-6 py-4 text-slate-600 truncate max-w-[250px]">{{ $product->deskripsi }}</td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center justify-center min-w-[2rem] h-6 px-2 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
@@ -94,6 +94,50 @@
 
 @push('scripts')
 <script>
+    function openModal(id) {
+        const modal = document.getElementById(id);
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    function openProductModal(id = null, nama = '', spesifikasi = '', deskripsi = '', stock = '') {
+        const form = document.getElementById('productForm');
+
+        // Bersihkan method PUT lama
+        form.querySelector('input[name="_method"]')?.remove();
+
+        if (id) {
+            form.action = '/admin/product/' + id;
+
+            const methodInput = document.createElement('input');
+            methodInput.type = 'hidden';
+            methodInput.name = '_method';
+            methodInput.value = 'PUT';
+
+            form.appendChild(methodInput);
+
+            document.getElementById('productModalTitle').textContent = 'Edit Produk';
+        } else {
+            form.action = '{{ route('admin.products.store') }}';
+
+            document.getElementById('productModalTitle').textContent = 'Tambah Produk';
+        }
+
+        document.getElementById('productNama').value = nama;
+        document.getElementById('productSpesifikasi').value = spesifikasi;
+        document.getElementById('productDeskripsi').value = deskripsi;
+        document.getElementById('productStock').value = stock;
+
+        openModal('productModal');
+    }
     function openProductModal(id = null, nama = '', spesifikasi = '', deskripsi = '', stock = '') {
         const form = document.getElementById('productForm');
         if (id) {

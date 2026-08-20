@@ -267,90 +267,92 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 items-stretch">
-                <!-- Sewa Alat -->
-                <div class="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-800/50 bg-[#0A2F1D] p-8 shadow-lg transition-all duration-300 hover:-translate-y-3 hover:border-emerald-500/60 hover:shadow-[0_28px_70px_rgba(4,55,34,0.28)] md:p-10">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="bg-emerald-200 text-emerald-950 font-bold text-xs px-4 py-1.5 rounded-full">Sewa Alat</div>
-                        <div class="w-10 h-10 bg-emerald-900/50 rounded-full flex items-center justify-center text-emerald-400 shrink-0 ml-2">
-                            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                    <div class="relative z-10 flex flex-1 flex-col">
-                        <h3 class="font-sans text-2xl font-bold text-white mb-2 pr-4">Sewa Unit MicroCell</h3>
-                        <p class="text-emerald-200/80 text-sm mb-6">Tanpa modal besar di awal</p>
-                        <div class="mb-8">
-                            <span class="text-2xl font-bold text-emerald-400">Rp 700.000</span>
-                            <span class="block text-emerald-400/80 text-sm mt-1">/ bulan</span>
-                        </div>
-                        <ul class="space-y-4 flex-1 mb-10">
-                            @foreach (['Tidak perlu membeli unit secara penuh', 'Perangkat tetap dirawat dan dikelola tim kami', 'Cocok untuk peternak yang ingin coba dulu', 'Kontrak fleksibel sesuai kebutuhan', 'Termasuk instalasi awal dan pendampingan'] as $item)
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="circle-check" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-sm text-emerald-100/90 leading-relaxed">{{ $item }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-                        <a href="#" target="_blank" class="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300">Hubungi Kami</a>
-                    </div>
-                </div>
-
-                <!-- Beli Unit -->
-                <div class="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-500/30 bg-[#115E2E] p-8 shadow-2xl transition-all duration-300 hover:-translate-y-6 hover:scale-[1.01] md:p-10 lg:-translate-y-4">
-                    <div class="relative z-10 flex justify-between items-start mb-6">
-                        <div>
-                            <div class="flex items-center gap-1.5 text-amber-300 font-bold text-xs mb-3">
-                                <i data-lucide="star" class="w-4 h-4 fill-current"></i> Rekomendasi
+                @foreach ($schemas as $schema)
+                    @if ($schema->is_recommended)
+                        <!-- Recommended Card (Middle style) -->
+                        <div class="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-500/30 bg-[#115E2E] p-8 shadow-2xl transition-all duration-300 hover:-translate-y-6 hover:scale-[1.01] md:p-10 lg:-translate-y-4">
+                            <div class="relative z-10 flex justify-between items-start mb-6">
+                                <div>
+                                    <div class="flex items-center gap-1.5 text-amber-300 font-bold text-xs mb-3">
+                                        <i data-lucide="star" class="w-4 h-4 fill-current"></i> Rekomendasi
+                                    </div>
+                                    @if ($schema->badge)
+                                    <div class="border border-white/30 bg-white/10 text-white font-bold text-xs px-4 py-1.5 rounded-full inline-block backdrop-blur-sm">{{ $schema->badge }}</div>
+                                    @endif
+                                </div>
+                                @if ($schema->icon)
+                                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-emerald-800 shrink-0 ml-2">
+                                    <i data-lucide="{{ $schema->icon }}" class="w-5 h-5 fill-current"></i>
+                                </div>
+                                @endif
                             </div>
-                            <div class="border border-white/30 bg-white/10 text-white font-bold text-xs px-4 py-1.5 rounded-full inline-block backdrop-blur-sm">B2C Peternak</div>
+                            <div class="relative z-10 flex flex-1 flex-col">
+                                <h3 class="font-sans text-2xl font-bold text-white mb-2">{{ $schema->skema }}</h3>
+                                <p class="text-emerald-100/90 text-sm mb-6">{{ $schema->subtitle }}</p>
+                                <div class="mb-6">
+                                    <span class="text-2xl font-bold text-emerald-300">Rp {{ number_format($schema->harga, 0, ',', '.') }}</span>
+                                    <span class="block text-emerald-300/80 text-sm mt-1">{{ $schema->satuan }}</span>
+                                </div>
+                                <ul class="space-y-4 flex-1 mb-10 border-t border-emerald-400/30 pt-4">
+                                    @php
+                                        $features = is_string($schema->features) ? json_decode($schema->features, true) : (is_array($schema->features) ? $schema->features : []);
+                                    @endphp
+                                    @if($features)
+                                        @foreach ($features as $item)
+                                        <li class="flex items-start gap-3">
+                                            <i data-lucide="circle-check" class="w-5 h-5 text-emerald-300 mt-0.5 flex-shrink-0"></i>
+                                            <span class="text-sm text-emerald-50 leading-relaxed">{{ $item }}</span>
+                                        </li>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                                <a href="{{ $schema->cta_link ?? '#' }}" class="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 py-4 rounded-2xl font-extrabold text-sm transition-all duration-300">{{ $schema->cta_text ?? 'Hubungi Kami' }}</a>
+                            </div>
                         </div>
-                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-emerald-800 shrink-0 ml-2">
-                            <i data-lucide="paw-print" class="w-5 h-5 fill-current"></i>
+                    @else
+                        <!-- Regular Card -->
+                        <div class="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-800/50 bg-[#0A2F1D] p-8 shadow-lg transition-all duration-300 hover:-translate-y-3 hover:border-emerald-500/60 hover:shadow-[0_28px_70px_rgba(4,55,34,0.28)] md:p-10">
+                            <div class="flex justify-between items-start mb-8">
+                                @if ($schema->badge)
+                                    @if ($loop->iteration == 3)
+                                        <div class="bg-white/10 border border-white/20 text-emerald-100 font-bold text-xs px-4 py-1.5 rounded-full inline-block">{{ $schema->badge }}</div>
+                                    @else
+                                        <div class="bg-emerald-200 text-emerald-950 font-bold text-xs px-4 py-1.5 rounded-full">{{ $schema->badge }}</div>
+                                    @endif
+                                @else
+                                    <div></div>
+                                @endif
+                                @if ($schema->icon)
+                                <div class="w-10 h-10 bg-emerald-900/50 rounded-full flex items-center justify-center text-emerald-400 shrink-0 ml-2">
+                                    <i data-lucide="{{ $schema->icon }}" class="w-5 h-5"></i>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="relative z-10 flex flex-1 flex-col">
+                                <h3 class="font-sans text-2xl font-bold text-white mb-2 pr-4">{{ $schema->skema }}</h3>
+                                <p class="text-emerald-200/80 text-sm mb-6">{{ $schema->subtitle }}</p>
+                                <div class="mb-8">
+                                    <span class="text-2xl font-bold text-emerald-400">Rp {{ number_format($schema->harga, 0, ',', '.') }}</span>
+                                    <span class="block text-emerald-400/80 text-sm mt-1">{{ $schema->satuan }}</span>
+                                </div>
+                                <ul class="space-y-4 flex-1 mb-10">
+                                    @php
+                                        $features = is_string($schema->features) ? json_decode($schema->features, true) : (is_array($schema->features) ? $schema->features : []);
+                                    @endphp
+                                    @if($features)
+                                        @foreach ($features as $item)
+                                        <li class="flex items-start gap-3">
+                                            <i data-lucide="circle-check" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                                            <span class="text-sm text-emerald-100/90 leading-relaxed">{{ $item }}</span>
+                                        </li>
+                                        @endforeach
+                                    @endif
+                                </ul>
+                                <a href="{{ $schema->cta_link ?? '#' }}" class="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300">{{ $schema->cta_text ?? 'Hubungi Kami' }}</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="relative z-10 flex flex-1 flex-col">
-                        <h3 class="font-sans text-2xl font-bold text-white mb-2">Beli Unit MicroCell</h3>
-                        <p class="text-emerald-100/90 text-sm mb-6">Kepemilikan penuh, sekali bayar</p>
-                        <div class="mb-6">
-                            <span class="text-2xl font-bold text-emerald-300">Rp 6.000.000</span>
-                            <span class="block text-emerald-300/80 text-sm mt-1">/ unit · bayar tunai</span>
-                        </div>
-                        <ul class="space-y-4 flex-1 mb-10 border-t border-emerald-400/30 pt-4">
-                            @foreach (['Unit MicroCell menjadi milik Anda sepenuhnya', 'Target: peternak sapi skala 10-100 ekor', 'Garansi hardware 1 tahun', 'Instalasi awal termasuk dalam paket', 'Pendampingan teknis di awal penggunaan'] as $item)
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="circle-check" class="w-5 h-5 text-emerald-300 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-sm text-emerald-50 leading-relaxed">{{ $item }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-                        <a href="#" target="_blank" class="block text-center w-full bg-white text-emerald-900 hover:bg-emerald-100 py-4 rounded-2xl font-extrabold text-sm transition-all duration-300">Beli Sekarang</a>
-                    </div>
-                </div>
-
-                <!-- After Sales -->
-                <div class="group relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[32px] border border-emerald-800/50 bg-[#0A2F1D] p-8 shadow-lg transition-all duration-300 hover:-translate-y-3 md:p-10">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="bg-white/10 border border-white/20 text-emerald-100 font-bold text-xs px-4 py-1.5 rounded-full inline-block">Untuk Semua Pembeli & Penyewa</div>
-                        <div class="w-10 h-10 bg-emerald-900/50 rounded-full flex items-center justify-center text-emerald-400 shrink-0 ml-2">
-                            <i data-lucide="wrench" class="w-5 h-5"></i>
-                        </div>
-                    </div>
-                    <div class="relative z-10 flex flex-1 flex-col">
-                        <h3 class="font-sans text-2xl font-bold text-white mb-2 pr-4">Layanan Instalasi & After-Sales Service</h3>
-                        <div class="mb-2 mt-4">
-                            <span class="text-2xl font-bold text-emerald-400">Rp 300.000</span>
-                            <span class="block text-emerald-400/80 text-sm mt-1">/ kunjungan servis</span>
-                        </div>
-                        <ul class="space-y-4 flex-1 mb-10">
-                            @foreach (['Tersedia untuk seluruh pengguna unit MicroCell', 'Kunjungan teknisi prioritas ke lokasi', 'Cek dan penggantian komponen', 'Laporan kondisi sistem setiap kunjungan'] as $item)
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="circle-check" class="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-sm text-emerald-100/90 leading-relaxed">{{ $item }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-                        <a href="#" target="_blank" class="block text-center w-full border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300">Hubungi Kami</a>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
         </div>
     </section>
