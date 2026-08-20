@@ -69,6 +69,12 @@
                     </tbody>
                 </table>
             </div>
+
+            @if($schemas->hasPages())
+            <div class="p-4 border-t border-slate-100">
+                {{ $schemas->links() }}
+            </div>
+            @endif
         </div>
     </div>
 

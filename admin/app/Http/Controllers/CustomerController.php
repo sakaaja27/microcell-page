@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::withCount('orders')->orderBy('id')->get();
+        $customers = Customer::withCount('orders')->orderBy('id')->paginate(10);
 
         return view('customers.index', compact('customers'));
     }

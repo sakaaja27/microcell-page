@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microcell - @yield('title', 'Admin Panel')</title>
+    <title>Microcell - @yield('title', 'MicroCell')</title>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -13,7 +13,7 @@
         <aside class="w-64 bg-slate-900 text-white min-h-screen flex flex-col shadow-xl shrink-0">
             <div class="h-16 flex items-center px-6 border-b border-slate-800">
                 <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-green-400">
-                    AdminPanel
+                    MicroCell
                 </span>
             </div>
             

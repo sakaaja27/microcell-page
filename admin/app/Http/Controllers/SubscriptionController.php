@@ -10,7 +10,7 @@ class SubscriptionController extends Controller
 {
     public function index()
     {
-        $subscriptions = Subscription::with(['customer', 'schema', 'order'])->orderBy('next_billing_date', 'asc')->get();
+        $subscriptions = Subscription::with(['customer', 'schema', 'order'])->orderBy('next_billing_date', 'asc')->paginate(10);
         return view('subscriptions.index', compact('subscriptions'));
     }
 

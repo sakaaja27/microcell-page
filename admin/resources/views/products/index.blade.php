@@ -57,6 +57,12 @@
                     </tbody>
                 </table>
             </div>
+
+            @if($products->hasPages())
+            <div class="p-4 border-t border-slate-100">
+                {{ $products->links() }}
+            </div>
+            @endif
         </div>
     </div>
 

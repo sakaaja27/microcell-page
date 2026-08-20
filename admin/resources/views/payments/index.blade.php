@@ -68,6 +68,12 @@
                     </tbody>
                 </table>
             </div>
+
+            @if($payments->hasPages())
+            <div class="p-4 border-t border-slate-100">
+                {{ $payments->links() }}
+            </div>
+            @endif
         </div>
     </div>
 

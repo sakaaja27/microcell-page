@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['customer', 'schema'])->orderBy('created_at', 'desc')->get();
+        $orders = Order::with(['customer', 'schema'])->orderBy('created_at', 'desc')->paginate(10);
         $customers = Customer::orderBy('nama')->get();
         $schemas = Schema::where('status', 'Aktif')->orderBy('skema')->get();
 
@@ -31,6 +31,14 @@ class OrderController extends Controller
 
         $customer = Customer::findOrFail($validated['customer_id']);
         $schema = Schema::findOrFail($validated['schema_id']);
+
+        $product = \App\Models\Product::first();
+        if ($product && stripos($schema->skema, 'Unit') !== false) {
+            if ($product->stock < $validated['qty']) {
+                return back()->withInput()->with('error', 'Stok produk tidak mencukupi (Tersisa: ' . $product->stock . ').');
+            }
+            $product->decrement('stock', $validated['qty']);
+        }
 
         $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
         $seq = $lastId ? ((int) preg_replace('/\D/', '', explode('-', $lastId)[0]) + 1) : 1;

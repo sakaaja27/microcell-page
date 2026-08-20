@@ -9,7 +9,7 @@ class PaymentMethodController extends Controller
 {
     public function index()
     {
-        $payments = PaymentMethod::orderBy('id')->get();
+        $payments = PaymentMethod::orderBy('id')->paginate(10);
 
         return view('payments.index', compact('payments'));
     }

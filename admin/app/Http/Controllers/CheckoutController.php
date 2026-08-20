@@ -49,6 +49,15 @@ class CheckoutController extends Controller
         $path = $request->file('image')->store('bukti', 'public');
         $imageUrl = asset('storage/' . $path);
 
+        $product = \App\Models\Product::first();
+        if ($product && stripos($schema->skema, 'Unit') !== false) {
+            if ($product->stock < $validated['qty']) {
+                return back()->withInput()->with('error', 'Maaf, stok produk tidak mencukupi (Tersisa: ' . $product->stock . '). Silakan tunggu restock.');
+            }
+            // Deduct stock
+            $product->decrement('stock', $validated['qty']);
+        }
+
         $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
         $seq = $lastId ? ((int) preg_replace('/\D/', '', explode('-', $lastId)[0]) + 1) : 1;
 

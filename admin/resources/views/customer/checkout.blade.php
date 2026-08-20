@@ -49,10 +49,14 @@
                         </div>
                     </div>
 
-                    <div class="mt-6">
-                        <label class="block text-sm font-bold text-emerald-100 mb-2">Jumlah (Qty)</label>
-                        <input type="number" name="qty" id="qty" value="1" min="1" class="w-32 bg-[#041706] border border-emerald-800/50 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent p-3 text-center text-lg font-bold" required onchange="updateTotal()">
-                    </div>
+                    @if(stripos($schema->skema, 'sewa') !== false || stripos($schema->satuan, 'bulan') !== false)
+                        <input type="hidden" name="qty" id="qty" value="1">
+                    @else
+                        <div class="mt-6">
+                            <label class="block text-sm font-bold text-emerald-100 mb-2">Jumlah (Qty)</label>
+                            <input type="number" name="qty" id="qty" value="1" min="1" class="w-32 bg-[#041706] border border-emerald-800/50 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent p-3 text-center text-lg font-bold" required onchange="updateTotal()">
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Metode Pembayaran -->

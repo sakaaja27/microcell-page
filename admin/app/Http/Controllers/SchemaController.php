@@ -9,7 +9,7 @@ class SchemaController extends Controller
 {
     public function index()
     {
-        $schemas = Schema::withCount('orders')->orderBy('id')->get();
+        $schemas = Schema::withCount('orders')->orderBy('id')->paginate(10);
 
         return view('schemas.index', compact('schemas'));
     }

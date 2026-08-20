@@ -2,38 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use Illuminate\Database\Seeder;
+use App\Models\Product;
 
 class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        Product::insert([
+        Product::updateOrCreate(
+            ['nama' => 'Microcell'],
             [
-                'nama' => 'Microcell Tower Type A',
-                'spesifikasi' => 'Tinggi 20m, Beban 500kg, Galvanis',
-                'deskripsi' => 'Tower microcell standar untuk area perkotaan padat penduduk.',
-                'stock' => 12,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama' => 'Microcell Pole Type B',
-                'spesifikasi' => 'Tinggi 15m, Beban 300kg, Monopole',
-                'deskripsi' => 'Tiang monopole estetis untuk area perumahan.',
-                'stock' => 5,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nama' => 'Smart Pole Type C',
-                'spesifikasi' => 'Tinggi 10m, Terintegrasi CCTV & Lampu',
-                'deskripsi' => 'Smart pole multifungsi untuk smart city.',
-                'stock' => 20,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+                'spesifikasi' => 'Dual Chamber, dimensi 42 × 40 × 40 cm, sistem MFC + BPFC, terdiri dari chamber anoda dan katoda, menggunakan limbah kotoran sapi sebagai sumber energi, material acrylic, salt bridge sebagai penghubung chamber, dan dilengkapi sistem monitoring IoT.',
+                'deskripsi' => 'Sistem MFC + BPFC yang memanfaatkan limbah kotoran sapi untuk menghasilkan energi listrik. Menggunakan desain dual chamber dengan ruang anoda dan katoda yang terhubung melalui salt bridge serta didukung sistem monitoring IoT.',
+                'stock' => 50,
+            ]
+        );
     }
 }

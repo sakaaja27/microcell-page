@@ -75,6 +75,12 @@
                     </tbody>
                 </table>
             </div>
+            
+            @if($orders->hasPages())
+            <div class="p-4 border-t border-slate-100">
+                {{ $orders->links() }}
+            </div>
+            @endif
         </div>
     </div>
 
