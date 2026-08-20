@@ -13,10 +13,18 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div class="relative max-w-sm w-full">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Cari pesanan..." class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all shadow-sm" onkeyup="searchTable()">
+                </div>
+            </div>
+
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
+                <table class="w-full text-sm text-left" id="dataTable">
                     <thead class="text-xs text-slate-500 uppercase bg-slate-50/50 border-b border-slate-100">
                         <tr>
+                            <th class="px-6 py-4 font-medium w-16">No</th>
                             <th class="px-6 py-4 font-medium">Kode Order</th>
                             <th class="px-6 py-4 font-medium">Pelanggan</th>
                             <th class="px-6 py-4 font-medium">Skema</th>
@@ -30,17 +38,18 @@
                     <tbody class="divide-y divide-slate-100">
                         @foreach ($orders as $order)
                             <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-slate-900">{{ $order->id }}</td>
-                                <td class="px-6 py-4 text-slate-700">{{ $order->customer }}</td>
-                                <td class="px-6 py-4 text-slate-600">{{ $order->skema }}</td>
+                                <td class="px-6 py-4 font-medium text-slate-500">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 font-medium text-slate-900 search-target">{{ $order->id }}</td>
+                                <td class="px-6 py-4 text-slate-700 search-target">{{ $order->customer }}</td>
+                                <td class="px-6 py-4 text-slate-600 search-target">{{ $order->skema }}</td>
                                 <td class="px-6 py-4 text-slate-600">{{ $order->qty }}</td>
                                 <td class="px-6 py-4 font-semibold text-slate-700">Rp {{ number_format($order->total, 0, ',', '.') }}</td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-4 search-target">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $order->status === 'Selesai' || $order->status === 'Proses' ? 'bg-emerald-100 text-emerald-700' : ($order->status === 'Menunggu' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700') }}">
                                         {{ $order->status }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap">{{ $order->tanggal }}</td>
+                                <td class="px-6 py-4 text-slate-500 whitespace-nowrap search-target">{{ $order->tanggal }}</td>
                                 <td class="px-6 py-4 text-right space-x-1 whitespace-nowrap">
                                     <button
                                         onclick="openDetailModal(this)"

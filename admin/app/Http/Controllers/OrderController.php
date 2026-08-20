@@ -77,19 +77,39 @@ class OrderController extends Controller
             'image' => $validated['image'] ?? $order->image,
         ]);
 
-        if ($validated['status'] === 'Selesai' && $order->schema && $order->schema->satuan === 'Bulan') {
-            \App\Models\Subscription::updateOrCreate(
-                [
+        if ($validated['status'] === 'Selesai' && $order->schema && stripos($order->schema->satuan, 'bulan') !== false) {
+            $subscription = \App\Models\Subscription::where('customer_id', $order->customer_id)
+                ->where('schema_id', $order->schema_id)
+                ->first();
+
+            if ($subscription) {
+                if ($subscription->order_id !== $order->id && $subscription->status !== 'Selesai') {
+                    $subscription->paid_months += 1;
+                    $subscription->next_billing_date = \Carbon\Carbon::parse($subscription->next_billing_date)->addMonth();
+                    $subscription->order_id = $order->id;
+                    
+                    if ($subscription->paid_months >= $subscription->total_months) {
+                        $subscription->status = 'Selesai';
+                    }
+                    $subscription->save();
+                }
+            } else {
+                $beliSchema = \App\Models\Schema::where('skema', 'like', '%Beli%')->first();
+                $hargaUnit = $beliSchema ? $beliSchema->harga : 6000000;
+                $hargaSewa = $order->schema->harga;
+                $totalMonths = ceil($hargaUnit / $hargaSewa);
+
+                \App\Models\Subscription::create([
                     'customer_id' => $order->customer_id,
                     'schema_id' => $order->schema_id,
-                ],
-                [
                     'order_id' => $order->id,
                     'status' => 'Aktif',
                     'started_at' => now(),
                     'next_billing_date' => now()->addMonth(),
-                ]
-            );
+                    'paid_months' => 1,
+                    'total_months' => $totalMonths
+                ]);
+            }
         }
 
         return back()->with('success', 'Pesanan berhasil diperbarui.');
@@ -103,19 +123,39 @@ class OrderController extends Controller
 
         $order->update(['status' => $validated['status']]);
 
-        if ($validated['status'] === 'Selesai' && $order->schema && $order->schema->satuan === 'Bulan') {
-            \App\Models\Subscription::updateOrCreate(
-                [
+        if ($validated['status'] === 'Selesai' && $order->schema && stripos($order->schema->satuan, 'bulan') !== false) {
+            $subscription = \App\Models\Subscription::where('customer_id', $order->customer_id)
+                ->where('schema_id', $order->schema_id)
+                ->first();
+
+            if ($subscription) {
+                if ($subscription->order_id !== $order->id && $subscription->status !== 'Selesai') {
+                    $subscription->paid_months += 1;
+                    $subscription->next_billing_date = \Carbon\Carbon::parse($subscription->next_billing_date)->addMonth();
+                    $subscription->order_id = $order->id;
+                    
+                    if ($subscription->paid_months >= $subscription->total_months) {
+                        $subscription->status = 'Selesai';
+                    }
+                    $subscription->save();
+                }
+            } else {
+                $beliSchema = \App\Models\Schema::where('skema', 'like', '%Beli%')->first();
+                $hargaUnit = $beliSchema ? $beliSchema->harga : 6000000;
+                $hargaSewa = $order->schema->harga;
+                $totalMonths = ceil($hargaUnit / $hargaSewa);
+
+                \App\Models\Subscription::create([
                     'customer_id' => $order->customer_id,
                     'schema_id' => $order->schema_id,
-                ],
-                [
                     'order_id' => $order->id,
                     'status' => 'Aktif',
                     'started_at' => now(),
                     'next_billing_date' => now()->addMonth(),
-                ]
-            );
+                    'paid_months' => 1,
+                    'total_months' => $totalMonths
+                ]);
+            }
         }
 
         return back()->with('success', 'Status pesanan berhasil diperbarui.');

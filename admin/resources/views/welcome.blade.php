@@ -90,10 +90,10 @@
         </div>
 
         <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 mb-8">
+            <!-- <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 mb-8">
                 <span class="text-sm">🌿</span>
                 <span class="font-sans text-xs font-bold tracking-wider uppercase">Inovasi Energi Terbarukan Berbasis Mikroba</span>
-            </div>
+            </div> -->
 
             <h1 class="font-sans text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1] mb-6 max-w-4xl mx-auto drop-shadow-sm">
                 Ubah Limbah Kotoran Sapi Menjadi <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-400">Energi Listrik</span>

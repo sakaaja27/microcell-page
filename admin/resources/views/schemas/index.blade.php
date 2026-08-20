@@ -13,10 +13,18 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div class="relative max-w-sm w-full">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Cari skema..." class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all shadow-sm" onkeyup="searchTable()">
+                </div>
+            </div>
+
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
+                <table class="w-full text-sm text-left" id="dataTable">
                     <thead class="text-xs text-slate-500 uppercase bg-slate-50/50 border-b border-slate-100">
                         <tr>
+                            <th class="px-6 py-4 font-medium w-16">No</th>
                             <th class="px-6 py-4 font-medium">Skema</th>
                             <th class="px-6 py-4 font-medium">Harga</th>
                             <th class="px-6 py-4 font-medium">Satuan Paket (Price Unit)</th>
@@ -28,7 +36,8 @@
                     <tbody class="divide-y divide-slate-100">
                         @foreach ($schemas as $schema)
                             <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-slate-900">
+                                <td class="px-6 py-4 font-medium text-slate-500">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 font-medium text-slate-900 search-target">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
                                             <span class="text-green-600 font-bold text-xs">{{ strtoupper(substr($schema->skema, 0, 1)) }}</span>
@@ -37,7 +46,7 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 font-semibold text-slate-700">Rp {{ number_format($schema->harga, 0, ',', '.') }}</td>
-                                <td class="px-6 py-4 text-slate-600">{{ $schema->satuan }}</td>
+                                <td class="px-6 py-4 text-slate-600 search-target">{{ $schema->satuan }}</td>
                                 <td class="px-6 py-4">
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $schema->status === 'Aktif' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600' }}">
                                         {{ $schema->status }}

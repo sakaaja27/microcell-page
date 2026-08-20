@@ -12,7 +12,10 @@
     <nav class="fixed top-0 inset-x-0 z-50 bg-[#041706]/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="{{ route('home') }}" class="flex items-center gap-2 text-emerald-400 font-bold text-xl tracking-tight hover:text-emerald-300 transition-colors">
-                <i data-lucide="leaf" class="w-6 h-6"></i> MicroCell
+                <img src="/assets/images/logo.png" alt="MicroCell Logo" class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-110" />
+                <span class="font-sans text-xl font-extrabold text-white tracking-tight">
+                    Micro<span class="text-emerald-400">Cell</span>
+                </span>
             </a>
             <div class="flex items-center gap-6">
                 <a href="{{ route('home') }}" class="text-sm font-semibold text-emerald-100/70 hover:text-white transition-colors">Beranda</a>
@@ -48,18 +51,47 @@
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach($subscriptions as $sub)
-                    <div class="bg-emerald-900/40 border border-emerald-700/50 rounded-2xl p-5 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 blur-2xl rounded-full"></div>
-                        <h3 class="text-lg font-bold text-white mb-1">{{ $sub->schema->skema ?? 'Layanan' }}</h3>
-                        <p class="text-sm text-emerald-200/70 mb-3">Mulai: {{ \Carbon\Carbon::parse($sub->started_at)->format('d M Y') }}</p>
-                        
-                        <div class="flex items-center justify-between border-t border-emerald-800/50 pt-3">
-                            <span class="text-sm text-emerald-100/60">Jatuh Tempo Berikutnya</span>
-                            <span class="text-sm font-bold {{ \Carbon\Carbon::parse($sub->next_billing_date)->isPast() ? 'text-red-400' : 'text-emerald-400' }}">
-                                {{ \Carbon\Carbon::parse($sub->next_billing_date)->format('d M Y') }}
-                            </span>
+                    <a href="{{ route('customer.checkout', $sub->schema_id) }}" class="block group {{ $sub->status === 'Selesai' ? 'pointer-events-none' : '' }}">
+                        <div class="bg-emerald-900/40 border {{ $sub->status === 'Selesai' ? 'border-blue-700/50' : 'border-emerald-700/50' }} rounded-2xl p-5 relative overflow-hidden transition-all duration-300 group-hover:bg-emerald-800/50 group-hover:border-emerald-500/70 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                            <div class="absolute top-0 right-0 w-20 h-20 {{ $sub->status === 'Selesai' ? 'bg-blue-500/10' : 'bg-emerald-500/10' }} blur-2xl rounded-full transition-transform duration-300 group-hover:scale-150"></div>
+                            
+                            <div class="flex justify-between items-start mb-1">
+                                <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">{{ $sub->schema->skema ?? 'Layanan' }}</h3>
+                                @if($sub->status === 'Selesai')
+                                    <div class="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-sm">Lunas</div>
+                                @else
+                                    <div class="bg-emerald-500 text-emerald-950 text-xs font-bold px-2 py-1 rounded-lg shadow-sm">Bayar Tagihan</div>
+                                @endif
+                            </div>
+                            
+                            <p class="text-sm text-emerald-200/70 mb-3">Mulai: {{ \Carbon\Carbon::parse($sub->started_at)->format('d M Y') }}</p>
+
+                            <!-- Progress Bar -->
+                            <div class="mb-4">
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-emerald-100/60">Progress Kepemilikan</span>
+                                    <span class="font-bold text-emerald-400">{{ $sub->paid_months }} / {{ $sub->total_months }} Bulan</span>
+                                </div>
+                                <div class="w-full bg-emerald-950/50 rounded-full h-1.5">
+                                    @php
+                                        $percentage = min(100, ($sub->paid_months / max(1, $sub->total_months)) * 100);
+                                    @endphp
+                                    <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-1.5 rounded-full" style="width: {{ $percentage }}%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between border-t border-emerald-800/50 pt-3">
+                                <span class="text-sm text-emerald-100/60">Jatuh Tempo Berikutnya</span>
+                                @if($sub->status === 'Selesai')
+                                    <span class="text-sm font-bold text-blue-400">Kepemilikan Penuh</span>
+                                @else
+                                    <span class="text-sm font-bold {{ \Carbon\Carbon::parse($sub->next_billing_date)->isPast() ? 'text-red-400' : 'text-emerald-400' }}">
+                                        {{ \Carbon\Carbon::parse($sub->next_billing_date)->format('d M Y') }}
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>

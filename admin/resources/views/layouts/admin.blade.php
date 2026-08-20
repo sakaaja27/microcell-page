@@ -112,6 +112,46 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+        }
+
+        function searchTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("dataTable");
+            if(!table) return;
+            const tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                const tds = tr[i].getElementsByClassName("search-target");
+                if (tds.length === 0) continue; // Skip header or empty rows without targets
+                let found = false;
+                for (let j = 0; j < tds.length; j++) {
+                    if (tds[j]) {
+                        const txtValue = tds[j].textContent || tds[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                tr[i].style.display = found ? "" : "none";
+            }
+        }
     </script>
 
     @stack('scripts')

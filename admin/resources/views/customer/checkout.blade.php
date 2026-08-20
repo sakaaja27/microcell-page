@@ -62,8 +62,11 @@
                     </h2>
                     <div class="space-y-3">
                         @foreach ($paymentMethods as $payment)
+                        @php
+                            $qrUrl = $payment->qr ? (str_starts_with($payment->qr, 'http') ? $payment->qr : asset('storage/' . $payment->qr)) : '';
+                        @endphp
                         <label class="relative flex items-center p-4 border border-emerald-800/50 rounded-2xl cursor-pointer hover:bg-emerald-900/20 transition-colors">
-                            <input type="radio" name="payment_method_id" value="{{ $payment->id }}" class="peer sr-only" required onchange="showPaymentInfo('{{ $payment->id }}')">
+                            <input type="radio" name="payment_method_id" value="{{ $payment->id }}" class="peer sr-only" required onchange="showPaymentInfo('{{ $qrUrl }}')">
                             <div class="w-5 h-5 rounded-full border-2 border-emerald-700 peer-checked:border-emerald-400 peer-checked:bg-emerald-400 mr-4 flex items-center justify-center transition-colors">
                                 <div class="w-2 h-2 rounded-full bg-[#0A2F1D]"></div>
                             </div>
@@ -81,6 +84,13 @@
                     <h2 class="text-lg font-bold text-white mb-6 flex items-center gap-2">
                         <i data-lucide="upload-cloud" class="w-5 h-5 text-emerald-400"></i> Upload Bukti Pembayaran
                     </h2>
+
+                    <!-- Tampilan QR Code (Dinamis) -->
+                    <div id="qrCodeContainer" class="hidden mb-6 flex flex-col items-center justify-center p-4 bg-white rounded-2xl w-fit">
+                        <p class="text-emerald-950 font-bold mb-2 text-sm text-center">Scan QR Code ini</p>
+                        <img id="qrCodeImage" src="" alt="QR Code" class="w-48 h-48 object-contain">
+                    </div>
+
                     <p class="text-sm text-emerald-100/70 mb-4">Silakan transfer sesuai nominal total ke metode yang dipilih, lalu unggah struk di sini.</p>
                     <input type="file" name="image" accept="image/*" required class="block w-full text-sm text-emerald-100/70 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-emerald-500 file:text-emerald-950 hover:file:bg-emerald-400 cursor-pointer bg-[#041706] rounded-full border border-emerald-800/50">
                     @error('image')
@@ -134,6 +144,18 @@
             
             document.getElementById('qtyText').innerText = qty + 'x';
             document.getElementById('totalHarga').innerText = 'Rp ' + total.toLocaleString('id-ID');
+        }
+
+        function showPaymentInfo(qrUrl) {
+            const container = document.getElementById('qrCodeContainer');
+            const img = document.getElementById('qrCodeImage');
+            if (qrUrl) {
+                img.src = qrUrl;
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+                img.src = '';
+            }
         }
     </script>
 </body>

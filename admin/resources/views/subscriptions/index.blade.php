@@ -19,10 +19,18 @@
     @endif
 
     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+            <div class="relative max-w-sm w-full">
+                <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="searchInput" placeholder="Cari langganan..." class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all shadow-sm" onkeyup="searchTable()">
+            </div>
+        </div>
+
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm whitespace-nowrap">
+            <table class="w-full text-left text-sm whitespace-nowrap" id="dataTable">
                 <thead>
                     <tr class="border-b border-slate-100 bg-slate-50/80 text-slate-500">
+                        <th class="py-4 px-6 font-semibold w-16">No</th>
                         <th class="py-4 px-6 font-semibold">Pelanggan</th>
                         <th class="py-4 px-6 font-semibold">Skema Layanan</th>
                         <th class="py-4 px-6 font-semibold">Mulai Sewa</th>
@@ -34,13 +42,14 @@
                 <tbody class="divide-y divide-slate-100">
                     @forelse ($subscriptions as $sub)
                         <tr class="hover:bg-slate-50/80 transition-colors">
-                            <td class="py-4 px-6">
+                            <td class="py-4 px-6 text-slate-500">{{ $loop->iteration }}</td>
+                            <td class="py-4 px-6 search-target">
                                 <div class="font-semibold text-slate-900">{{ $sub->customer->nama ?? 'Unknown' }}</div>
                                 <div class="text-slate-500 text-xs">{{ $sub->customer->email ?? '' }}</div>
                             </td>
-                            <td class="py-4 px-6 font-medium text-slate-700">{{ $sub->schema->skema ?? 'N/A' }}</td>
-                            <td class="py-4 px-6 text-slate-600">{{ $sub->started_at ? \Carbon\Carbon::parse($sub->started_at)->format('d M Y') : '-' }}</td>
-                            <td class="py-4 px-6">
+                            <td class="py-4 px-6 font-medium text-slate-700 search-target">{{ $sub->schema->skema ?? 'N/A' }}</td>
+                            <td class="py-4 px-6 text-slate-600 search-target">{{ $sub->started_at ? \Carbon\Carbon::parse($sub->started_at)->format('d M Y') : '-' }}</td>
+                            <td class="py-4 px-6 search-target">
                                 @php
                                     $isPastDue = $sub->next_billing_date && \Carbon\Carbon::parse($sub->next_billing_date)->isPast();
                                 @endphp
@@ -66,7 +75,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-12 text-center text-slate-500">
+                            <td colspan="7" class="py-12 text-center text-slate-500">
                                 <div class="flex flex-col items-center justify-center">
                                     <i data-lucide="calendar-off" class="w-12 h-12 text-slate-300 mb-3"></i>
                                     <p class="text-base font-medium text-slate-600">Belum ada pelanggan sewa</p>

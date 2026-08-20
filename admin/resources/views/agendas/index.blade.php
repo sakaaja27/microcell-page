@@ -19,10 +19,18 @@
         @endif
 
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div class="relative max-w-sm w-full">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Cari agenda..." class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all shadow-sm" onkeyup="searchTable()">
+                </div>
+            </div>
+
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
+                <table class="w-full text-sm text-left" id="dataTable">
                     <thead class="text-xs text-slate-500 uppercase bg-slate-50/50 border-b border-slate-100">
                         <tr>
+                            <th class="px-6 py-4 font-medium w-16">No</th>
                             <th class="px-6 py-4 font-medium">Judul Agenda</th>
                             <th class="px-6 py-4 font-medium">Tanggal</th>
                             <th class="px-6 py-4 font-medium">Waktu</th>
@@ -32,13 +40,14 @@
                     <tbody class="divide-y divide-slate-100">
                         @forelse ($agendas as $agenda)
                             <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="px-6 py-4 font-medium text-slate-900">
+                                <td class="px-6 py-4 font-medium text-slate-500">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 font-medium text-slate-900 search-target">
                                     {{ $agenda->title }}
                                 </td>
-                                <td class="px-6 py-4 text-slate-600">
+                                <td class="px-6 py-4 text-slate-600 search-target">
                                     {{ \Carbon\Carbon::parse($agenda->date)->translatedFormat('d F Y') }}
                                 </td>
-                                <td class="px-6 py-4 text-slate-600">
+                                <td class="px-6 py-4 text-slate-600 search-target">
                                     {{ $agenda->time }}
                                 </td>
                                 <td class="px-6 py-4 text-right space-x-2">
@@ -52,7 +61,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-8 text-center text-slate-500">
+                                <td colspan="5" class="px-6 py-8 text-center text-slate-500">
                                     Belum ada data agenda.
                                 </td>
                             </tr>

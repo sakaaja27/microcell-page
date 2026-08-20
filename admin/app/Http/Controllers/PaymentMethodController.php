@@ -20,8 +20,12 @@ class PaymentMethodController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'jenis' => ['required', 'string', 'max:50'],
             'va' => ['required', 'string', 'max:100'],
-            'qr' => ['nullable', 'url', 'max:500'],
+            'qr' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
+
+        if ($request->hasFile('qr')) {
+            $validated['qr'] = $request->file('qr')->store('qr_codes', 'public');
+        }
 
         PaymentMethod::create($validated);
 
@@ -34,8 +38,14 @@ class PaymentMethodController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'jenis' => ['required', 'string', 'max:50'],
             'va' => ['required', 'string', 'max:100'],
-            'qr' => ['nullable', 'url', 'max:500'],
+            'qr' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
+
+        if ($request->hasFile('qr')) {
+            $validated['qr'] = $request->file('qr')->store('qr_codes', 'public');
+        } else {
+            unset($validated['qr']);
+        }
 
         $payment->update($validated);
 

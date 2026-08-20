@@ -6,44 +6,37 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold tracking-tight text-slate-900">Data Customer</h1>
-
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
-                    </div>
-                    <input
-                        type="text"
-                        id="customerSearch"
-                        oninput="filterCustomers(this.value)"
-                        class="bg-white border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block w-64 pl-10 p-2.5 shadow-sm"
-                        placeholder="Cari customer..."
-                    />
-                </div>
-                <button onclick="openCustomerModal()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors shadow-sm">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    Tambah Customer
-                </button>
-            </div>
+            <button onclick="openCustomerModal()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition-colors shadow-sm">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                Tambah Customer
+            </button>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                <div class="relative max-w-sm w-full">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Cari customer..." class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 text-sm rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all shadow-sm" onkeyup="searchTable()">
+                </div>
+            </div>
+
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
+                <table class="w-full text-sm text-left" id="dataTable">
                     <thead class="text-xs text-slate-500 uppercase bg-slate-50/50 border-b border-slate-100">
                         <tr>
+                            <th class="px-6 py-4 font-medium w-16">No</th>
                             <th class="px-6 py-4 font-medium">Nama Customer</th>
                             <th class="px-6 py-4 font-medium">Email</th>
                             <th class="px-6 py-4 font-medium">No. Telepon</th>
-                            <th class="px-6 py-4 font-medium">Password</th>
                             <th class="px-6 py-4 font-medium">Total Order</th>
                             <th class="px-6 py-4 font-medium text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="customerTableBody" class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-slate-100">
                         @foreach ($customers as $customer)
-                            <tr class="hover:bg-slate-50/50 transition-colors" data-name="{{ strtolower($customer->nama) }}" data-email="{{ strtolower($customer->email) }}">
-                                <td class="px-6 py-4 font-medium text-slate-900">
+                            <tr class="hover:bg-slate-50/50 transition-colors">
+                                <td class="px-6 py-4 font-medium text-slate-500">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 font-medium text-slate-900 search-target">
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
                                             {{ strtoupper(substr($customer->nama, 0, 1)) }}
@@ -51,11 +44,8 @@
                                         {{ $customer->nama }}
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-slate-600">{{ $customer->email }}</td>
-                                <td class="px-6 py-4 text-slate-600">{{ $customer->phone }}</td>
-                                <td class="px-6 py-4 text-slate-400 font-mono tracking-widest">
-                                    ********
-                                </td>
+                                <td class="px-6 py-4 text-slate-600 search-target">{{ $customer->email }}</td>
+                                <td class="px-6 py-4 text-slate-600 search-target">{{ $customer->phone }}</td>
                                 <td class="px-6 py-4 text-slate-600">{{ $customer->orders_count }}</td>
                                 <td class="px-6 py-4 text-right space-x-2">
                                     <button onclick="openCustomerModal({{ $customer->id }}, '{{ $customer->nama }}', '{{ $customer->email }}', '{{ $customer->phone }}')" class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Edit">
@@ -131,14 +121,6 @@
         document.getElementById('customerEmail').value = email;
         document.getElementById('customerPhone').value = phone;
         openModal('customerModal');
-    }
-
-    function filterCustomers(query) {
-        const q = query.toLowerCase();
-        document.querySelectorAll('#customerTableBody tr').forEach(row => {
-            const haystack = row.dataset.name + ' ' + row.dataset.email;
-            row.style.display = haystack.includes(q) ? '' : 'none';
-        });
     }
 </script>
 @endpush
