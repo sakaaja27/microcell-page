@@ -1,6 +1,0 @@
-{
-  "name": "MicroCell",
-  "description": "Inovasi Energi Terbarukan dari Limbah Peternakan dengan Teknologi Microbial Fuel Cell",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
