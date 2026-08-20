@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SchemaController;
+use App\Http\Controllers\AgendaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => view('welcome'))->name('home');
@@ -48,4 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/metode-pembayaran', [PaymentMethodController::class, 'store'])->name('admin.payments.store');
     Route::put('/admin/metode-pembayaran/{payment}', [PaymentMethodController::class, 'update'])->name('admin.payments.update');
     Route::delete('/admin/metode-pembayaran/{payment}', [PaymentMethodController::class, 'destroy'])->name('admin.payments.destroy');
+
+    Route::get('/admin/agenda', [AgendaController::class, 'index'])->name('admin.agendas');
+    Route::post('/admin/agenda', [AgendaController::class, 'store'])->name('admin.agendas.store');
+    Route::put('/admin/agenda/{agenda}', [AgendaController::class, 'update'])->name('admin.agendas.update');
+    Route::delete('/admin/agenda/{agenda}', [AgendaController::class, 'destroy'])->name('admin.agendas.destroy');
 });

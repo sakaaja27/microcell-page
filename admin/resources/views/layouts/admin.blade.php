@@ -26,6 +26,7 @@
                         ['name' => 'Pesanan', 'icon' => 'shopping-cart', 'route' => 'admin.orders'],
                         ['name' => 'Customer', 'icon' => 'users', 'route' => 'admin.customers'],
                         ['name' => 'Metode Pembayaran', 'icon' => 'credit-card', 'route' => 'admin.payments'],
+                        ['name' => 'Agenda', 'icon' => 'calendar', 'route' => 'admin.agendas'],
                     ];
                 @endphp
 

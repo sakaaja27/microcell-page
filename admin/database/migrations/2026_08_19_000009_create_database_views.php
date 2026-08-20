@@ -12,7 +12,7 @@ return new class extends Migration
             SELECT
                 (SELECT COALESCE(SUM(stock), 0) FROM products) AS total_alat,
                 (SELECT COUNT(*) FROM customers) AS total_pengguna,
-                (SELECT COALESCE(SUM(total), 0) FROM orders) AS total_pendapatan,
+                (SELECT COALESCE(SUM(total), 0) FROM orders WHERE status = 'Selesai') AS total_pendapatan,
                 (SELECT COUNT(*) FROM orders) AS pesanan_terbaru
         SQL);
 

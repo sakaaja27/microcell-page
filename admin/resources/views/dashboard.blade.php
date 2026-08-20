@@ -8,7 +8,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+                <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
                     <i data-lucide="activity" class="w-7 h-7 text-emerald-600"></i>
                 </div>
                 <div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
+                <div class="w-8 h-8 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
                     <i data-lucide="users" class="w-7 h-7 text-green-600"></i>
                 </div>
                 <div>
@@ -26,16 +26,16 @@
                 </div>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+                <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
                     <i data-lucide="dollar-sign" class="w-7 h-7 text-emerald-600"></i>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-slate-500">Total Pendapatan</p>
-                    <h3 class="text-2xl font-bold text-slate-900 mt-1">Rp {{ number_format(round($metrics->total_pendapatan / 1000000)) }}M</h3>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1">Rp {{ number_format($metrics->total_pendapatan, 0, ',', '.') }}</h3>
                 </div>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4 hover:shadow-md transition-shadow">
-                <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+                <div class="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
                     <i data-lucide="shopping-bag" class="w-7 h-7 text-emerald-600"></i>
                 </div>
                 <div>
@@ -113,7 +113,14 @@
                 <div class="p-6 space-y-4">
                     @foreach ($agendas as $agenda)
                         @php
-                            [$day, $month] = explode('-', $agenda->date);
+                            try {
+                                $dateObj = \Carbon\Carbon::parse($agenda->date);
+                                $day = $dateObj->format('d');
+                                $month = $dateObj->translatedFormat('M');
+                            } catch (\Exception $e) {
+                                $day = '?';
+                                $month = '?';
+                            }
                         @endphp
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
                             <div class="w-12 h-12 rounded-lg bg-emerald-100 flex flex-col items-center justify-center shrink-0">
@@ -133,8 +140,8 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     const lineCtx = document.getElementById('lineChart');
     const pieCtx = document.getElementById('pieChart');
 
@@ -198,19 +205,18 @@
         new Chart(pieCtx, {
             type: 'doughnut',
             data: {
-                labels: pieData.map(d => d.name),
+                labels: pieData.map(d => d.name === 'Belum ada transaksi selesai' ? d.name : `${d.name} (${d.value} user)`),
                 datasets: [{
                     data: pieData.map(d => d.value),
-                    backgroundColor: ['#10b981', '#059669', '#34d399'],
-                    borderColor: '#ffffff',
-                    borderWidth: 2
+                    backgroundColor: ['#10b981', '#059669', '#34d399', '#047857', '#065f46'],
+                    borderWidth: 0
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 cutout: '72%',
-                spacing: 5,
+                spacing: 0,
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -236,5 +242,6 @@
             }
         });
     }
+});
 </script>
 @endpush
