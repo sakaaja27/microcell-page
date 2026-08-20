@@ -36,7 +36,7 @@
                         name="email"
                         value="{{ old('email') }}"
                         class="w-full bg-[#041706]/50 border border-emerald-500/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent block p-3.5 transition-all outline-none"
-                        placeholder="admin@microcell.com"
+                        placeholder="user@gmail.com"
                         required
                         autofocus
                     />

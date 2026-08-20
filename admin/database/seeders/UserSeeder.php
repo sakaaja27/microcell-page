@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@microcell.com',
+            'role' => 'admin',
             'password' => Hash::make('password'),
         ]);
     }

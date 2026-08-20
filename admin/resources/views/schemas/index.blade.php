@@ -29,7 +29,7 @@
                             <th class="px-6 py-4 font-medium">Harga</th>
                             <th class="px-6 py-4 font-medium">Satuan Paket (Price Unit)</th>
                             <th class="px-6 py-4 font-medium">Status</th>
-                            <th class="px-6 py-4 font-medium">Total Order</th>
+                            <th class="px-4 py-4 font-medium">Total Order</th>
                             <th class="px-6 py-4 font-medium text-right">Aksi</th>
                         </tr>
                     </thead>

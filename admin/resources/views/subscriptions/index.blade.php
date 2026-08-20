@@ -35,8 +35,9 @@
                         <th class="py-4 px-6 font-semibold">Skema Layanan</th>
                         <th class="py-4 px-6 font-semibold">Mulai Sewa</th>
                         <th class="py-4 px-6 font-semibold">Jatuh Tempo</th>
+                        <th class="py-4 px-6 font-semibold">Progress</th>
+                        <th class="py-4 px-6 font-semibold">Sewa Akhir</th>
                         <th class="py-4 px-6 font-semibold">Status</th>
-                        <th class="py-4 px-6 font-semibold text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -51,31 +52,35 @@
                             <td class="py-4 px-6 text-slate-600 search-target">{{ $sub->started_at ? \Carbon\Carbon::parse($sub->started_at)->format('d M Y') : '-' }}</td>
                             <td class="py-4 px-6 search-target">
                                 @php
-                                    $isPastDue = $sub->next_billing_date && \Carbon\Carbon::parse($sub->next_billing_date)->isPast();
+                                    $isPastDue = $sub->next_billing_date && \Carbon\Carbon::parse($sub->next_billing_date)->isPast() && $sub->status !== 'Selesai';
                                 @endphp
                                 <span class="{{ $isPastDue ? 'text-red-600 font-bold' : 'text-slate-600' }}">
                                     {{ $sub->next_billing_date ? \Carbon\Carbon::parse($sub->next_billing_date)->format('d M Y') : '-' }}
                                 </span>
                             </td>
-                            <td class="py-4 px-6">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    {{ $sub->status }}
-                                </span>
+                            <td class="py-4 px-6 text-slate-600 search-target">
+                                <span class="font-medium text-slate-900">{{ $sub->paid_months }}</span> / {{ $sub->total_months }} Bulan
                             </td>
-                            <td class="py-4 px-6 text-right">
-                                <form action="{{ route('admin.subscriptions.bill', $sub) }}" method="POST" onsubmit="return confirm('Buat tagihan bulan berikutnya untuk pelanggan ini?')">
-                                    @csrf
-                                    <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100" title="Buat Tagihan">
-                                        <i data-lucide="receipt" class="w-4 h-4"></i>
-                                        <span>Buat Tagihan</span>
-                                    </button>
-                                </form>
+                            <td class="py-4 px-6 text-slate-600 search-target font-semibold text-blue-600">
+                                {{ $sub->started_at && $sub->total_months ? \Carbon\Carbon::parse($sub->started_at)->addMonths($sub->total_months)->format('d M Y') : '-' }}
+                            </td>
+                            <td class="py-4 px-6 search-target">
+                                @if($sub->status === 'Selesai')
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                        Lunas (Selesai)
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        {{ $sub->status }}
+                                    </span>
+                                @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-12 text-center text-slate-500">
+                            <td colspan="8" class="py-12 text-center text-slate-500">
                                 <div class="flex flex-col items-center justify-center">
                                     <i data-lucide="calendar-off" class="w-12 h-12 text-slate-300 mb-3"></i>
                                     <p class="text-base font-medium text-slate-600">Belum ada pelanggan sewa</p>

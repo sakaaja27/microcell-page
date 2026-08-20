@@ -104,7 +104,7 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="bg-[#16A34A] text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-emerald-500 hover:shadow-[0_0_20px_rgba(22,163,74,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center">
+                <a href="https://wa.me/6265612749419" target="_blank" rel="noopener noreferrer" class="bg-[#16A34A] text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-emerald-500 hover:shadow-[0_0_20px_rgba(22,163,74,0.4)] active:scale-95 transition-all duration-200 flex items-center justify-center">
                     Konsultasi Gratis
                 </a>
                 <a href="#how-it-works" class="flex items-center justify-center gap-2 border border-white/30 text-white px-8 py-4 rounded-full font-bold text-sm hover:bg-white/10 active:scale-95 transition-all duration-200">
@@ -266,7 +266,7 @@
                     <h3 class="font-sans text-xl md:text-2xl font-bold text-white mb-2 md:mb-1">Siap Mengubah Limbah Menjadi Energi Listrik?</h3>
                     <p class="text-emerald-200/80 text-sm md:text-base">Konsultasikan instalasi MicroCell untuk peternakan Anda sekarang.</p>
                 </div>
-                <a href="#" target="_blank" rel="noopener noreferrer" class="w-full md:w-auto text-center whitespace-nowrap bg-emerald-300 hover:bg-emerald-400 text-emerald-950 font-bold px-8 py-4 rounded-full transition-colors duration-300 flex-shrink-0 shadow-lg shadow-emerald-400/20">
+                <a href="https://wa.me/6265612749419" target="_blank" rel="noopener noreferrer" class="w-full md:w-auto text-center whitespace-nowrap bg-emerald-300 hover:bg-emerald-400 text-emerald-950 font-bold px-8 py-4 rounded-full transition-colors duration-300 flex-shrink-0 shadow-lg shadow-emerald-400/20">
                     Hubungi Kami
                 </a>
             </div>
@@ -450,7 +450,7 @@
                 <div>
                     <h4 class="font-sans text-sm font-bold text-white mb-6 tracking-wide">Hubungi Kami</h4>
                     <p class="text-xs text-emerald-300/70 mb-6 font-sans leading-relaxed">Ada pertanyaan terkait kelayakan teknis atau ingin merancang survei peternakan komunal Anda?</p>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-emerald-500 text-white px-5 py-3 rounded-full text-xs font-bold transition-all">
+                    <a href="https://wa.me/6265612749419" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#16A34A] hover:bg-emerald-500 text-white px-5 py-3 rounded-full text-xs font-bold transition-all">
                         Kontak Via WhatsApp
                     </a>
                 </div>

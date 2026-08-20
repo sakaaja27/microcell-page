@@ -44,14 +44,22 @@
             </nav>
 
             <div class="p-4 border-t border-slate-800">
-                <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-800/50">
-                    <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm">
-                        A
+                <div class="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-sm">
+                            A
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-white">Admin User</span>
+                            <span class="text-xs text-slate-400">admin@microcell.com</span>
+                        </div>
                     </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-medium text-white">Admin User</span>
-                        <span class="text-xs text-slate-400">admin@microcell.com</span>
-                    </div>
+                    <form method="POST" action="{{ route('logout') }}" title="Logout">
+                        @csrf
+                        <button type="submit" class="text-slate-400 hover:text-red-400 transition-colors">
+                            <i data-lucide="log-out" class="w-5 h-5"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </aside>

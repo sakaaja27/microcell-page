@@ -51,24 +51,10 @@
                                 </td>
                                 <td class="px-6 py-4 text-slate-500 whitespace-nowrap search-target">{{ $order->tanggal }}</td>
                                 <td class="px-6 py-4 text-right space-x-1 whitespace-nowrap">
-                                    <button
-                                        onclick="openDetailModal(this)"
-                                        data-id="{{ $order->id }}"
-                                        data-customer="{{ $order->customer }}"
-                                        data-total="Rp {{ number_format($order->total, 0, ',', '.') }}"
-                                        data-tanggal="{{ $order->tanggal }}"
-                                        data-status="{{ $order->status }}"
-                                        data-image="{{ $order->image }}"
-                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors border border-transparent hover:border-emerald-100"
-                                        title="Detail"
-                                    >
+                                    <button onclick="openDetailModal(this)" data-id="{{ $order->id }}" data-customer="{{ $order->customer->nama ?? 'Unknown' }}" data-total="Rp {{ number_format($order->total, 0, ',', '.') }}" data-tanggal="{{ $order->tanggal }}" data-status="{{ $order->status }}" data-image="{{ $order->image }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition-colors border border-transparent hover:border-slate-200" title="Detail">
                                         <i data-lucide="eye" class="w-4 h-4"></i>
                                         <span>Detail</span>
                                     </button>
-                                    <button onclick="openOrderModal('{{ $order->id }}', {{ $order->customer_id ?? 'null' }}, {{ $order->schema_id ?? 'null' }}, {{ $order->qty }}, '{{ $order->status }}', '{{ $order->tanggal }}', '{{ $order->image }}')" class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Edit">
-                                        <i data-lucide="edit" class="w-4 h-4"></i>
-                                    </button>
-                                   
                                 </td>
                             </tr>
                         @endforeach
@@ -81,75 +67,6 @@
                 {{ $orders->links() }}
             </div>
             @endif
-        </div>
-    </div>
-
-    <div id="orderModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="p-6 border-b border-slate-100 flex items-center justify-between">
-                <h2 id="orderModalTitle" class="text-lg font-bold text-slate-900">Tambah Pesanan</h2>
-                <button onclick="closeModal('orderModal')" class="text-slate-400 hover:text-slate-600 p-2 hover:bg-slate-100 rounded-full transition-colors">
-                    ✕
-                </button>
-            </div>
-            <form id="orderForm" method="POST" action="{{ route('admin.orders.store') }}">
-                @csrf
-                <div class="p-6 overflow-y-auto space-y-5">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Customer</label>
-                        <select name="customer_id" id="orderCustomer" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" required>
-                            <option value="">-- Pilih Customer --</option>
-                            @foreach ($customers as $customer)
-                                <option value="{{ $customer->id }}">{{ $customer->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Skema</label>
-                        <select name="schema_id" id="orderSchema" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" required>
-                            <option value="">-- Pilih Skema --</option>
-                            @foreach ($schemas as $schema)
-                                <option value="{{ $schema->id }}" data-harga="{{ $schema->harga }}">{{ $schema->skema }} (Rp {{ number_format($schema->harga, 0, ',', '.') }})</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Qty</label>
-                            <input type="number" name="qty" id="orderQty" min="1" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" placeholder="1" required />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Status</label>
-                            <select name="status" id="orderStatus" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3">
-                                <option value="Menunggu">Menunggu</option>
-                                <option value="Proses">Proses</option>
-                                <option value="Selesai">Selesai</option>
-                                <option value="Dibatalkan">Dibatalkan</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal</label>
-                        <input type="text" name="tanggal" id="orderTanggal" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" placeholder="19-Aug-2026" required />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Bukti Pembayaran URL (opsional)</label>
-                        <input type="url" name="image" id="orderImage" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" placeholder="https://..." />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Total Otomatis</label>
-                        <input type="text" id="orderTotalPreview" class="w-full bg-slate-100 border border-slate-200 text-slate-900 text-sm rounded-xl block p-3" placeholder="Rp 0" readonly />
-                    </div>
-                </div>
-                <div class="p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50">
-                    <button type="button" onclick="closeModal('orderModal')" class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
-                        Batal
-                    </button>
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-xl hover:bg-emerald-700 transition-colors shadow-sm">
-                        Simpan
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -223,42 +140,6 @@
 @push('scripts')
 <script>
     let currentOrderId = null;
-
-    function openOrderModal(id = null, customerId = '', schemaId = '', qty = 1, status = 'Menunggu', tanggal = '', image = '') {
-        const form = document.getElementById('orderForm');
-        if (id) {
-            form.action = '/admin/pesanan/' + id;
-            const methodInput = document.createElement('input');
-            methodInput.type = 'hidden';
-            methodInput.name = '_method';
-            methodInput.value = 'PUT';
-            form.appendChild(methodInput);
-            document.getElementById('orderModalTitle').textContent = 'Edit Pesanan';
-        } else {
-            form.action = '{{ route('admin.orders.store') }}';
-            form.querySelector('input[name="_method"]')?.remove();
-            document.getElementById('orderModalTitle').textContent = 'Tambah Pesanan';
-        }
-        document.getElementById('orderCustomer').value = customerId;
-        document.getElementById('orderSchema').value = schemaId;
-        document.getElementById('orderQty').value = qty;
-        document.getElementById('orderStatus').value = status;
-        document.getElementById('orderTanggal').value = tanggal;
-        document.getElementById('orderImage').value = image;
-        updateTotalPreview();
-        openModal('orderModal');
-    }
-
-    function updateTotalPreview() {
-        const select = document.getElementById('orderSchema');
-        const harga = parseInt(select.options[select.selectedIndex]?.dataset.harga || 0);
-        const qty = parseInt(document.getElementById('orderQty').value || 0);
-        const total = harga * qty;
-        document.getElementById('orderTotalPreview').value = 'Rp ' + total.toLocaleString('id-ID');
-    }
-
-    document.getElementById('orderSchema').addEventListener('change', updateTotalPreview);
-    document.getElementById('orderQty').addEventListener('input', updateTotalPreview);
 
     function openDetailModal(btn) {
         currentOrderId = btn.dataset.id;

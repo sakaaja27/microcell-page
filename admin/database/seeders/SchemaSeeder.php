@@ -19,20 +19,7 @@ class SchemaSeeder extends Seeder
                 'icon' => 'refresh-cw',
                 'features' => json_encode(["Tidak perlu membeli unit secara penuh", "Perangkat tetap dirawat dan dikelola tim kami", "Cocok untuk peternak yang ingin coba dulu", "Kontrak fleksibel sesuai kebutuhan", "Termasuk instalasi awal dan pendampingan"]),
                 'is_recommended' => 0,
-                'cta_text' => 'Hubungi Kami',
-                'cta_link' => '#',
-                'status' => 'Aktif',
-            ],
-            [
-                'skema' => 'Layanan Instalasi & After-Sales Service',
-                'harga' => 300000,
-                'satuan' => '/ kunjungan servis',
-                'subtitle' => null,
-                'badge' => 'Untuk Semua Pembeli & Penyewa',
-                'icon' => 'wrench',
-                'features' => json_encode(["Tersedia untuk seluruh pengguna unit MicroCell", "Kunjungan teknisi prioritas ke lokasi", "Cek dan penggantian komponen", "Laporan kondisi sistem setiap kunjungan"]),
-                'is_recommended' => 1,
-                'cta_text' => 'Hubungi Kami',
+                'cta_text' => 'Sewa MicroCell',
                 'cta_link' => '#',
                 'status' => 'Aktif',
             ],
@@ -44,11 +31,25 @@ class SchemaSeeder extends Seeder
                 'badge' => 'B2C Peternak',
                 'icon' => 'paw-print',
                 'features' => json_encode(["Unit MicroCell menjadi milik Anda sepenuhnya", "Target: peternak sapi skala 10-100 ekor", "Garansi hardware 1 tahun", "Instalasi awal termasuk dalam paket", "Pendampingan teknis di awal penggunaan"]),
-                'is_recommended' => 0,
+                'is_recommended' => 1,
                 'cta_text' => 'Beli Sekarang',
                 'cta_link' => '#',
                 'status' => 'Aktif',
+            ],
+            [
+                'skema' => 'Layanan Instalasi & After-Sales Service',
+                'harga' => 300000,
+                'satuan' => '/ kunjungan servis',
+                'subtitle' => null,
+                'badge' => 'Untuk Semua Pembeli & Penyewa',
+                'icon' => 'wrench',
+                'features' => json_encode(["Tersedia untuk seluruh pengguna unit MicroCell", "Kunjungan teknisi prioritas ke lokasi", "Cek dan penggantian komponen", "Laporan kondisi sistem setiap kunjungan"]),
+                'is_recommended' => 0,
+                'cta_text' => 'Maintance',
+                'cta_link' => '#',
+                'status' => 'Aktif',
             ]
+            
         ];
 
         foreach ($schemas as $schema) {
