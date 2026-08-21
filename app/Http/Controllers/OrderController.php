@@ -24,6 +24,7 @@ class OrderController extends Controller
             'customer_id' => ['required', 'exists:customers,id'],
             'schema_id' => ['required', 'exists:schemas,id'],
             'qty' => ['required', 'integer', 'min:1'],
+            'duration' => ['nullable', 'integer', 'min:1'],
             'status' => ['required', 'in:Menunggu,Proses,Selesai,Dibatalkan'],
             'tanggal' => ['required', 'string', 'max:30'],
             'image' => ['nullable', 'url', 'max:500'],
@@ -50,6 +51,7 @@ class OrderController extends Controller
             'customer' => $customer->nama,
             'skema' => $schema->skema,
             'qty' => $validated['qty'],
+            'duration' => $validated['duration'] ?? null,
             'total' => $schema->harga * $validated['qty'],
             'status' => $validated['status'],
             'tanggal' => $validated['tanggal'],
@@ -102,10 +104,7 @@ class OrderController extends Controller
                     $subscription->save();
                 }
             } else {
-                $beliSchema = \App\Models\Schema::where('skema', 'like', '%Beli%')->first();
-                $hargaUnit = $beliSchema ? $beliSchema->harga : 6000000;
-                $hargaSewa = $order->schema->harga;
-                $totalMonths = ceil($hargaUnit / $hargaSewa);
+                $totalMonths = $order->duration ?? 1;
 
                 \App\Models\Subscription::create([
                     'customer_id' => $order->customer_id,
@@ -148,10 +147,7 @@ class OrderController extends Controller
                     $subscription->save();
                 }
             } else {
-                $beliSchema = \App\Models\Schema::where('skema', 'like', '%Beli%')->first();
-                $hargaUnit = $beliSchema ? $beliSchema->harga : 6000000;
-                $hargaSewa = $order->schema->harga;
-                $totalMonths = ceil($hargaUnit / $hargaSewa);
+                $totalMonths = $order->duration ?? 1;
 
                 \App\Models\Subscription::create([
                     'customer_id' => $order->customer_id,

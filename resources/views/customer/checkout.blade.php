@@ -49,8 +49,37 @@
                         </div>
                     </div>
 
-                    @if(stripos($schema->skema, 'sewa') !== false || stripos($schema->satuan, 'bulan') !== false)
-                        <input type="hidden" name="qty" id="qty" value="1">
+                    @if(isset($subscription) && $subscription)
+                        <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
+                        <input type="hidden" name="qty" id="qty" value="{{ $subscription->order->qty ?? 1 }}">
+                        <input type="hidden" name="duration" id="duration" value="{{ $subscription->order->duration ?? 1 }}">
+                        <div class="mt-6 p-4 bg-[#041706]/80 border border-emerald-800/50 rounded-xl space-y-2 text-sm text-emerald-100/80">
+                            <p class="font-bold text-emerald-400 mb-3"><i data-lucide="info" class="w-4 h-4 inline-block mr-1"></i> Pembayaran Tagihan Sewa</p>
+                            <div class="flex justify-between border-b border-emerald-900/50 pb-2">
+                                <span>Jumlah Alat</span>
+                                <strong class="text-white">{{ $subscription->order->qty ?? 1 }} Unit</strong>
+                            </div>
+                            <div class="flex justify-between pt-1">
+                                <span>Total Kontrak</span>
+                                <strong class="text-white">{{ $subscription->total_months }} Bulan</strong>
+                            </div>
+                        </div>
+                    @elseif(stripos($schema->skema, 'sewa') !== false || stripos($schema->satuan, 'bulan') !== false)
+                        <div class="mt-6 space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-100 mb-2">Jumlah Alat</label>
+                                <input type="number" name="qty" id="qty" value="1" min="1" class="w-32 bg-[#041706] border border-emerald-800/50 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent p-3 text-center text-lg font-bold" required onchange="updateTotal()">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-100 mb-2">Durasi Sewa (Bulan)</label>
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <button type="button" onclick="setDuration(1)" class="px-4 py-2 bg-[#041706] border border-emerald-800/50 rounded-xl text-sm font-bold text-emerald-100 hover:bg-emerald-900/50 transition-colors">1 Bulan</button>
+                                    <button type="button" onclick="setDuration(5)" class="px-4 py-2 bg-[#041706] border border-emerald-800/50 rounded-xl text-sm font-bold text-emerald-100 hover:bg-emerald-900/50 transition-colors">5 Bulan</button>
+                                    <button type="button" onclick="setDuration(12)" class="px-4 py-2 bg-[#041706] border border-emerald-800/50 rounded-xl text-sm font-bold text-emerald-100 hover:bg-emerald-900/50 transition-colors">12 Bulan</button>
+                                </div>
+                                <input type="number" name="duration" id="duration" value="1" min="1" class="w-full bg-[#041706] border border-emerald-800/50 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent p-3 text-lg font-bold" required onchange="updateTotal()" placeholder="Atau isi jumlah bulan">
+                            </div>
+                        </div>
                     @else
                         <div class="mt-6">
                             <label class="block text-sm font-bold text-emerald-100 mb-2">Jumlah (Qty)</label>
@@ -141,12 +170,25 @@
     <script>
         lucide.createIcons();
 
+        function setDuration(val) {
+            document.getElementById('duration').value = val;
+            updateTotal();
+        }
+
         function updateTotal() {
-            const qty = document.getElementById('qty').value;
-            const harga = parseInt(document.getElementById('hargaSatuan').getAttribute('data-harga'));
-            const total = qty * harga;
+            const qty = parseInt(document.getElementById('qty').value) || 1;
+            const durationInput = document.getElementById('duration');
+            const duration = durationInput ? (parseInt(durationInput.value) || 1) : 1;
             
-            document.getElementById('qtyText').innerText = qty + 'x';
+            const harga = parseInt(document.getElementById('hargaSatuan').getAttribute('data-harga'));
+            const total = qty * harga; // Pay per month
+            
+            let qtyText = qty + 'x';
+            if (durationInput) {
+                qtyText = qty + ' Unit (Kontrak ' + duration + ' Bulan)';
+            }
+            
+            document.getElementById('qtyText').innerText = qtyText;
             document.getElementById('totalHarga').innerText = 'Rp ' + total.toLocaleString('id-ID');
         }
 

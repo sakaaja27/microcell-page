@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function index(Schema $schema)
+    public function index(Request $request, Schema $schema)
     {
         if ($schema->status !== 'Aktif') {
             return redirect('/')->with('error', 'Skema tidak aktif.');
@@ -18,7 +18,12 @@ class CheckoutController extends Controller
 
         $paymentMethods = PaymentMethod::all();
         
-        return view('customer.checkout', compact('schema', 'paymentMethods'));
+        $subscription = null;
+        if ($request->has('subscription_id')) {
+            $subscription = \App\Models\Subscription::find($request->input('subscription_id'));
+        }
+        
+        return view('customer.checkout', compact('schema', 'paymentMethods', 'subscription'));
     }
 
     public function store(Request $request, Schema $schema)
@@ -29,6 +34,7 @@ class CheckoutController extends Controller
 
         $validated = $request->validate([
             'qty' => ['required', 'integer', 'min:1'],
+            'duration' => ['nullable', 'integer', 'min:1'],
             'payment_method_id' => ['required', 'exists:payment_methods,id'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
@@ -49,8 +55,10 @@ class CheckoutController extends Controller
         $path = $request->file('image')->store('bukti', 'public');
         $imageUrl = asset('storage/' . $path);
 
+        $subscriptionId = $request->input('subscription_id');
+
         $product = \App\Models\Product::first();
-        if ($product && stripos($schema->skema, 'Unit') !== false) {
+        if (!$subscriptionId && $product && stripos($schema->skema, 'Unit') !== false) {
             if ($product->stock < $validated['qty']) {
                 return back()->withInput()->with('error', 'Maaf, stok produk tidak mencukupi (Tersisa: ' . $product->stock . '). Silakan tunggu restock.');
             }
@@ -61,6 +69,9 @@ class CheckoutController extends Controller
         $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
         $seq = $lastId ? ((int) preg_replace('/\D/', '', explode('-', $lastId)[0]) + 1) : 1;
 
+        $duration = $request->input('duration', null);
+        $totalHarga = $schema->harga * $validated['qty'];
+
         Order::create([
             'id' => sprintf('MC%03d-%d-%d', $seq, now()->day, now()->year),
             'customer_id' => $customer->id,
@@ -69,7 +80,8 @@ class CheckoutController extends Controller
             'customer' => $customer->nama,
             'skema' => $schema->skema,
             'qty' => $validated['qty'],
-            'total' => $schema->harga * $validated['qty'],
+            'duration' => $duration,
+            'total' => $totalHarga,
             'status' => 'Menunggu',
             'tanggal' => now()->format('Y-m-d'),
             'image' => $imageUrl,

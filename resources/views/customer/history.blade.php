@@ -51,7 +51,7 @@
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach($subscriptions as $sub)
-                    <a href="{{ route('customer.checkout', $sub->schema_id) }}" class="block group {{ $sub->status === 'Selesai' ? 'pointer-events-none' : '' }}">
+                    <a href="{{ route('customer.checkout', ['schema' => $sub->schema_id, 'subscription_id' => $sub->id]) }}" class="block group {{ $sub->status === 'Selesai' ? 'pointer-events-none' : '' }}">
                         <div class="bg-emerald-900/40 border {{ $sub->status === 'Selesai' ? 'border-blue-700/50' : 'border-emerald-700/50' }} rounded-2xl p-5 relative overflow-hidden transition-all duration-300 group-hover:bg-emerald-800/50 group-hover:border-emerald-500/70 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.2)]">
                             <div class="absolute top-0 right-0 w-20 h-20 {{ $sub->status === 'Selesai' ? 'bg-blue-500/10' : 'bg-emerald-500/10' }} blur-2xl rounded-full transition-transform duration-300 group-hover:scale-150"></div>
                             
