@@ -26,6 +26,20 @@
             <p class="text-emerald-100/70">Pastikan detail pesanan sudah sesuai sebelum melakukan pembayaran.</p>
         </div>
 
+        @if (session('error'))
+            <div class="mb-8 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl flex items-center gap-3 text-red-400">
+                <i data-lucide="alert-circle" class="w-5 h-5 flex-shrink-0"></i>
+                <p class="font-medium text-sm">{{ session('error') }}</p>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="mb-8 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex items-center gap-3 text-emerald-400">
+                <i data-lucide="check-circle" class="w-5 h-5 flex-shrink-0"></i>
+                <p class="font-medium text-sm">{{ session('success') }}</p>
+            </div>
+        @endif
+
         <form action="{{ route('customer.checkout.store', $schema) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             @csrf
             
