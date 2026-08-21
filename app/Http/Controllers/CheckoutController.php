@@ -22,8 +22,10 @@ class CheckoutController extends Controller
         if ($request->has('subscription_id')) {
             $subscription = \App\Models\Subscription::find($request->input('subscription_id'));
         }
+
+        $availableStock = \App\Models\Product::first()->stock ?? 0;
         
-        return view('customer.checkout', compact('schema', 'paymentMethods', 'subscription'));
+        return view('customer.checkout', compact('schema', 'paymentMethods', 'subscription', 'availableStock'));
     }
 
     public function store(Request $request, Schema $schema)
