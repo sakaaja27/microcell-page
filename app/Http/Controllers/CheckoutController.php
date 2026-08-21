@@ -56,14 +56,23 @@ class CheckoutController extends Controller
         $imageUrl = asset('storage/' . $path);
 
         $subscriptionId = $request->input('subscription_id');
+        $isPreorder = $request->input('is_preorder', 0) == 1;
+        $isStockDeducted = false;
 
         $product = \App\Models\Product::first();
         if (!$subscriptionId && $product && stripos($schema->skema, 'Unit') !== false) {
-            if ($product->stock < $validated['qty']) {
-                return back()->withInput()->with('error', 'Maaf, stok produk tidak mencukupi (Tersisa: ' . $product->stock . '). Silakan tunggu restock.');
+            if (!$isPreorder) {
+                if ($product->stock < $validated['qty']) {
+                    return back()->withInput()->with('error', 'Maaf, stok produk tidak mencukupi (Tersisa: ' . $product->stock . '). Silakan tunggu restock.');
+                }
+                // Deduct stock
+                $product->decrement('stock', $validated['qty']);
+                $isStockDeducted = true;
             }
-            // Deduct stock
-            $product->decrement('stock', $validated['qty']);
+        } else {
+            // Not a unit schema, no stock deduction needed ever
+            $isStockDeducted = true;
+            $isPreorder = false;
         }
 
         $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
@@ -85,6 +94,8 @@ class CheckoutController extends Controller
             'status' => 'Menunggu',
             'tanggal' => now()->format('Y-m-d'),
             'image' => $imageUrl,
+            'is_preorder' => $isPreorder,
+            'is_stock_deducted' => $isStockDeducted,
         ]);
 
         return redirect()->route('customer.history')->with('success', 'Pesanan berhasil dibuat. Kami akan segera memprosesnya.');

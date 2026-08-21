@@ -33,12 +33,21 @@ class OrderController extends Controller
         $customer = Customer::findOrFail($validated['customer_id']);
         $schema = Schema::findOrFail($validated['schema_id']);
 
+        $isPreorder = $request->input('is_preorder', 0) == 1;
+        $isStockDeducted = false;
+
         $product = \App\Models\Product::first();
         if ($product && stripos($schema->skema, 'Unit') !== false) {
-            if ($product->stock < $validated['qty']) {
-                return back()->withInput()->with('error', 'Stok produk tidak mencukupi (Tersisa: ' . $product->stock . ').');
+            if (!$isPreorder) {
+                if ($product->stock < $validated['qty']) {
+                    return back()->withInput()->with('error', 'Stok produk tidak mencukupi (Tersisa: ' . $product->stock . '). Centang Pre-Order jika ingin mengabaikan stok.');
+                }
+                $product->decrement('stock', $validated['qty']);
+                $isStockDeducted = true;
             }
-            $product->decrement('stock', $validated['qty']);
+        } else {
+            $isPreorder = false;
+            $isStockDeducted = true;
         }
 
         $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
@@ -56,6 +65,8 @@ class OrderController extends Controller
             'status' => $validated['status'],
             'tanggal' => $validated['tanggal'],
             'image' => $validated['image'] ?? null,
+            'is_preorder' => $isPreorder,
+            'is_stock_deducted' => $isStockDeducted,
         ]);
 
         return back()->with('success', 'Pesanan berhasil ditambahkan.');
@@ -127,6 +138,19 @@ class OrderController extends Controller
         $validated = $request->validate([
             'status' => ['required', 'in:Menunggu,Proses,Selesai,Dibatalkan'],
         ]);
+
+        $needsStockCheck = ($validated['status'] === 'Proses' || $validated['status'] === 'Selesai');
+        
+        if ($needsStockCheck && $order->is_preorder && !$order->is_stock_deducted) {
+            $product = \App\Models\Product::first();
+            if ($product && $product->stock < $order->qty) {
+                return back()->with('error', 'Gagal: Stok saat ini (' . $product->stock . ' Unit) tidak cukup untuk PO ini (' . $order->qty . ' Unit). Silakan restock produk terlebih dahulu.');
+            }
+            if ($product) {
+                $product->decrement('stock', $order->qty);
+            }
+            $order->update(['is_stock_deducted' => true]);
+        }
 
         $order->update(['status' => $validated['status']]);
 

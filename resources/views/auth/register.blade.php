@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - MicroCell Admin</title>
+    <title>Daftar - MicroCell</title>
     @vite(['resources/css/app.css'])
     <script src="https://unpkg.com/lucide@0.546.0/dist/umd/lucide.min.js"></script>
 </head>
@@ -36,7 +36,7 @@
                         name="name"
                         value="{{ old('name') }}"
                         class="w-full bg-[#041706]/50 border border-emerald-500/30 text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent block p-3 transition-all outline-none"
-                        placeholder="Nama Admin"
+                        placeholder="Nama"
                         required
                         autofocus
                     />

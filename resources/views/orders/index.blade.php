@@ -41,7 +41,12 @@
                                 <td class="px-6 py-4 font-medium text-slate-500">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4 font-medium text-slate-900 search-target">{{ $order->id }}</td>
                                 <td class="px-6 py-4 text-slate-700 search-target">{{ $order->customer }}</td>
-                                <td class="px-6 py-4 text-slate-600 search-target">{{ $order->skema }}</td>
+                                <td class="px-6 py-4 text-slate-600 search-target">
+                                    {{ $order->skema }}
+                                    @if($order->is_preorder)
+                                        <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 border border-amber-200">PO</span>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 text-slate-600">{{ $order->qty }}</td>
                                 <td class="px-6 py-4 font-semibold text-slate-700">Rp {{ number_format($order->total, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4 search-target">
@@ -177,6 +182,11 @@
                         <label class="block text-sm font-medium text-slate-700 mb-1">Durasi Sewa (Bulan)</label>
                         <input type="number" name="duration" id="form_duration" min="1" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" placeholder="Kosongkan jika beli">
                     </div>
+                </div>
+                
+                <div class="mt-2 flex items-center gap-2">
+                    <input type="checkbox" name="is_preorder" id="form_is_preorder" value="1" class="w-4 h-4 text-emerald-600 bg-slate-100 border-slate-300 rounded focus:ring-emerald-500">
+                    <label for="form_is_preorder" class="text-sm font-medium text-slate-700">Jadikan Pre-Order (Abaikan Stok Alat)</label>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

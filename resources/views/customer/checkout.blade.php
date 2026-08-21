@@ -63,6 +63,16 @@
                         </div>
                     </div>
 
+                    <input type="hidden" name="is_preorder" id="is_preorder" value="0">
+                    
+                    <div id="po-warning" class="hidden mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-center gap-3 text-amber-400">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 flex-shrink-0"></i>
+                        <div>
+                            <p class="font-bold text-sm">Pesanan Pre-Order</p>
+                            <p class="text-xs opacity-90 mt-1">Stok alat saat ini tidak mencukupi (Tersisa: {{ $availableStock ?? 0 }} Unit). Pesanan ini otomatis akan menjadi <strong>Pre-Order</strong> dan alat akan diberikan setelah restock.</p>
+                        </div>
+                    </div>
+
                     @if(isset($subscription) && $subscription)
                         <input type="hidden" name="subscription_id" value="{{ $subscription->id }}">
                         <input type="hidden" name="qty" id="qty" value="{{ $subscription->order->qty ?? 1 }}">
@@ -169,7 +179,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="relative z-10 w-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold rounded-2xl py-4 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] active:scale-[0.98]">
+                    <button type="submit" id="btn-submit-checkout" class="relative z-10 w-full bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold rounded-2xl py-4 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] active:scale-[0.98]">
                         Kirim Pesanan Sekarang
                     </button>
                     
@@ -183,11 +193,19 @@
 
     <script>
         lucide.createIcons();
+        
+        const availableStock = {{ $availableStock ?? 0 }};
+        const isUnit = {{ stripos($schema->skema, 'Unit') !== false ? 'true' : 'false' }};
 
         function setDuration(val) {
             document.getElementById('duration').value = val;
             updateTotal();
         }
+        
+        // Initial check on load
+        document.addEventListener('DOMContentLoaded', function() {
+            if(document.getElementById('qty')) updateTotal();
+        });
 
         function updateTotal() {
             const qty = parseInt(document.getElementById('qty').value) || 1;
@@ -200,6 +218,28 @@
             let qtyText = qty + 'x';
             if (durationInput) {
                 qtyText = qty + ' Unit (Kontrak ' + duration + ' Bulan)';
+            }
+            
+            const poWarning = document.getElementById('po-warning');
+            const isPreorderInput = document.getElementById('is_preorder');
+            const btnSubmit = document.getElementById('btn-submit-checkout');
+            
+            if (isUnit && qty > availableStock) {
+                if(poWarning) poWarning.classList.remove('hidden');
+                if(isPreorderInput) isPreorderInput.value = "1";
+                if(btnSubmit) {
+                    btnSubmit.innerHTML = "Lanjutkan Pre-Order";
+                    btnSubmit.classList.remove('bg-emerald-500', 'hover:bg-emerald-400', 'text-emerald-950', 'shadow-[0_0_20px_rgba(16,185,129,0.3)]');
+                    btnSubmit.classList.add('bg-amber-500', 'hover:bg-amber-400', 'text-amber-950', 'shadow-[0_0_20px_rgba(245,158,11,0.3)]');
+                }
+            } else {
+                if(poWarning) poWarning.classList.add('hidden');
+                if(isPreorderInput) isPreorderInput.value = "0";
+                if(btnSubmit) {
+                    btnSubmit.innerHTML = "Kirim Pesanan Sekarang";
+                    btnSubmit.classList.add('bg-emerald-500', 'hover:bg-emerald-400', 'text-emerald-950', 'shadow-[0_0_20px_rgba(16,185,129,0.3)]');
+                    btnSubmit.classList.remove('bg-amber-500', 'hover:bg-amber-400', 'text-amber-950', 'shadow-[0_0_20px_rgba(245,158,11,0.3)]');
+                }
             }
             
             document.getElementById('qtyText').innerText = qtyText;

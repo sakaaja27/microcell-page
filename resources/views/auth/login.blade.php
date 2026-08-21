@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - MicroCell</title>
+    <title>Login - MicroCell</title>
     @vite(['resources/css/app.css'])
     <script src="https://unpkg.com/lucide@0.546.0/dist/umd/lucide.min.js"></script>
 </head>
