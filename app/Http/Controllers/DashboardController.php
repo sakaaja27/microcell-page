@@ -12,7 +12,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $metrics = (object) DB::table('v_dashboard_metrics')->first();
+        $metrics = (object) [
+            'total_alat' => \App\Models\Product::sum('stock') ?? 0,
+            'total_pengguna' => \App\Models\Customer::count(),
+            'total_pendapatan' => Order::where('status', 'Selesai')->sum('total') ?? 0,
+            'pesanan_terbaru' => Order::count(),
+        ];
 
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         $monthlyTotals = array_fill(0, 12, 0);
@@ -36,10 +41,10 @@ class DashboardController extends Controller
             ]);
         }
 
-        $schemaData = DB::table('v_order_details')
+        $schemaData = DB::table('orders')
             ->where('status', 'Selesai')
-            ->select('skema_name as name', DB::raw('count(*) as value'))
-            ->groupBy('skema_name')
+            ->select('skema as name', DB::raw('count(*) as value'))
+            ->groupBy('skema')
             ->get();
 
         if ($schemaData->isEmpty()) {
