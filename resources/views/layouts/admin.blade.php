@@ -6,6 +6,7 @@
     <title>Microcell - @yield('title', 'MicroCell')</title>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900 antialiased" x-data>
     <div class="flex min-h-screen">
