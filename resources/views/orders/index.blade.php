@@ -125,6 +125,9 @@
             </div>
 
             <div class="p-6 border-t border-slate-100 flex justify-end gap-3 bg-slate-50">
+                <a href="#" id="modalInvoiceBtn" class="hidden px-4 py-2 text-sm font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl hover:bg-emerald-100 transition-colors mr-auto flex items-center">
+                    <i data-lucide="download" class="w-4 h-4 mr-1"></i> Cetak Invoice
+                </a>
                 <button onclick="closeModal('detailModal')" class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
                     Batal
                 </button>
@@ -274,6 +277,15 @@
         } else {
             img.src = '';
             img.parentElement.style.display = 'none';
+        }
+        
+        const invoiceBtn = document.getElementById('modalInvoiceBtn');
+        const status = btn.dataset.status;
+        if (status === 'Proses' || status === 'Selesai') {
+            invoiceBtn.href = `/admin/pesanan/${currentOrderId}/invoice`;
+            invoiceBtn.classList.remove('hidden');
+        } else {
+            invoiceBtn.classList.add('hidden');
         }
         
         openModal('detailModal');

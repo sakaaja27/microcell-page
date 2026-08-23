@@ -22,6 +22,7 @@ class SchemaController extends Controller
             'badge' => 'nullable|string|max:255',
             'icon' => 'nullable|string|max:255',
             'harga' => 'required|numeric|min:0',
+            'diskon' => 'nullable|integer|min:0|max:100',
             'satuan' => 'required|string|max:255',
             'status' => 'required|string|in:Aktif,Tidak Aktif',
             'features' => 'nullable|string',
@@ -39,6 +40,7 @@ class SchemaController extends Controller
         $validated['is_recommended'] = $request->has('is_recommended');
         $validated['cta_text'] = $validated['cta_text'] ?? 'Hubungi Kami';
         $validated['cta_link'] = $validated['cta_link'] ?? '#';
+        $validated['diskon'] = $validated['diskon'] ?? 0;
 
         Schema::create($validated);
 
@@ -53,6 +55,7 @@ class SchemaController extends Controller
             'badge' => 'nullable|string|max:255',
             'icon' => 'nullable|string|max:255',
             'harga' => 'required|numeric|min:0',
+            'diskon' => 'nullable|integer|min:0|max:100',
             'satuan' => 'required|string|max:255',
             'status' => 'required|string|in:Aktif,Tidak Aktif',
             'features' => 'nullable|string',
@@ -70,6 +73,7 @@ class SchemaController extends Controller
         $validated['is_recommended'] = $request->has('is_recommended');
         $validated['cta_text'] = $validated['cta_text'] ?? 'Hubungi Kami';
         $validated['cta_link'] = $validated['cta_link'] ?? '#';
+        $validated['diskon'] = $validated['diskon'] ?? 0;
 
         $schema->update($validated);
 

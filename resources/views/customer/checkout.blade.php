@@ -58,7 +58,16 @@
                             <p class="text-emerald-100/60 text-sm mt-1">{{ $schema->subtitle }}</p>
                         </div>
                         <div class="mt-4 md:mt-0 text-right">
-                            <div class="text-2xl font-black text-emerald-300">Rp {{ number_format($schema->harga, 0, ',', '.') }}</div>
+                            @if($schema->diskon > 0)
+                                @php $discounted = $schema->harga - ($schema->harga * ($schema->diskon / 100)); @endphp
+                                <div class="text-sm line-through text-emerald-100/50">Rp {{ number_format($schema->harga, 0, ',', '.') }}</div>
+                                <div class="text-2xl font-black text-emerald-300 flex items-center justify-end gap-2">
+                                    Rp {{ number_format($discounted, 0, ',', '.') }}
+                                    <span class="text-xs px-2 py-0.5 bg-red-500/20 text-red-400 rounded-md border border-red-500/30">-{{ $schema->diskon }}%</span>
+                                </div>
+                            @else
+                                <div class="text-2xl font-black text-emerald-300">Rp {{ number_format($schema->harga, 0, ',', '.') }}</div>
+                            @endif
                             <div class="text-xs text-emerald-100/50 mt-1">{{ $schema->satuan }}</div>
                         </div>
                     </div>
@@ -166,7 +175,10 @@
                     <div class="space-y-4 mb-6 relative z-10">
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-emerald-100/70">Harga Satuan</span>
-                            <span class="font-bold text-white" id="hargaSatuan" data-harga="{{ $schema->harga }}">Rp {{ number_format($schema->harga, 0, ',', '.') }}</span>
+                            @php 
+                                $finalHarga = $schema->diskon > 0 ? ($schema->harga - ($schema->harga * ($schema->diskon / 100))) : $schema->harga; 
+                            @endphp
+                            <span class="font-bold text-white" id="hargaSatuan" data-harga="{{ $finalHarga }}">Rp {{ number_format($finalHarga, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between items-center text-sm">
                             <span class="text-emerald-100/70">Jumlah</span>
@@ -175,7 +187,7 @@
                         <div class="h-px bg-emerald-800/50 w-full my-4"></div>
                         <div class="flex justify-between items-end">
                             <span class="font-bold text-emerald-100">Total Pembayaran</span>
-                            <span class="text-3xl font-black text-emerald-400" id="totalHarga">Rp {{ number_format($schema->harga, 0, ',', '.') }}</span>
+                            <span class="text-3xl font-black text-emerald-400" id="totalHarga">Rp {{ number_format($finalHarga, 0, ',', '.') }}</span>
                         </div>
                     </div>
                     

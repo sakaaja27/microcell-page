@@ -81,7 +81,10 @@ class CheckoutController extends Controller
         $seq = $lastId ? ((int) preg_replace('/\D/', '', explode('-', $lastId)[0]) + 1) : 1;
 
         $duration = $request->input('duration', null);
-        $totalHarga = $schema->harga * $validated['qty'];
+        
+        $diskonPercent = $schema->diskon ?? 0;
+        $discountedPrice = $schema->harga - ($schema->harga * ($diskonPercent / 100));
+        $totalHarga = $discountedPrice * $validated['qty'];
 
         Order::create([
             'id' => sprintf('MC%03d-%d-%d', $seq, now()->day, now()->year),
@@ -98,6 +101,7 @@ class CheckoutController extends Controller
             'image' => $imageUrl,
             'is_preorder' => $isPreorder,
             'is_stock_deducted' => $isStockDeducted,
+            'diskon' => $diskonPercent,
         ]);
 
         return redirect()->route('customer.history')->with('success', 'Pesanan berhasil dibuat. Kami akan segera memprosesnya.');

@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/pesanan', [OrderController::class, 'store'])->name('admin.orders.store');
     Route::put('/admin/pesanan/{order}', [OrderController::class, 'update'])->name('admin.orders.update');
     Route::put('/admin/pesanan/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
+    Route::get('/admin/pesanan/{order}/invoice', [OrderController::class, 'invoice'])->name('admin.orders.invoice');
     Route::delete('/admin/pesanan/{order}', [OrderController::class, 'destroy'])->name('admin.orders.destroy');
 
     Route::get('/admin/customer', [CustomerController::class, 'index'])->name('admin.customers');

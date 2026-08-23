@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $metrics = (object) [
             'total_alat' => \App\Models\Product::sum('stock') ?? 0,
             'total_pengguna' => \App\Models\Customer::count(),
-            'total_pendapatan' => Order::where('status', 'Selesai')->sum('total') ?? 0,
+            'total_pendapatan' => Order::whereIn('status', ['Proses', 'Selesai'])->sum('total') ?? 0,
             'pesanan_terbaru' => Order::count(),
         ];
 
@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $monthlyTotals = array_fill(0, 12, 0);
 
         $orders = DB::table('orders')
-            ->where('status', 'Selesai')
+            ->whereIn('status', ['Proses', 'Selesai'])
             ->whereYear('created_at', date('Y'))
             ->selectRaw('MONTH(created_at) as month, SUM(total) as total')
             ->groupBy('month')
@@ -42,14 +42,14 @@ class DashboardController extends Controller
         }
 
         $schemaData = DB::table('orders')
-            ->where('status', 'Selesai')
+            ->whereIn('status', ['Proses', 'Selesai'])
             ->select('skema as name', DB::raw('count(*) as value'))
             ->groupBy('skema')
             ->get();
 
         if ($schemaData->isEmpty()) {
             $schemaData = collect([
-                (object)['name' => 'Belum ada transaksi selesai', 'value' => 1]
+                (object)['name' => 'Belum ada pesanan diproses', 'value' => 1]
             ]);
         }
         $recentOrders = Order::with(['customer', 'schema'])

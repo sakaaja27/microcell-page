@@ -57,7 +57,7 @@
                                     @php
                                         $featuresList = is_string($schema->features) ? implode("\n", json_decode($schema->features, true) ?? []) : implode("\n", $schema->features ?? []);
                                     @endphp
-                                    <button onclick='openSchemaModal({{ $schema->id }}, @json($schema->skema), @json($schema->subtitle), @json($schema->badge), @json($schema->icon), {{ $schema->harga }}, @json($schema->satuan), @json($schema->status), @json($featuresList), {{ $schema->is_recommended ? 'true' : 'false' }}, @json($schema->cta_text), @json($schema->cta_link))' class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Edit">
+                                    <button onclick='openSchemaModal({{ $schema->id }}, @json($schema->skema), @json($schema->subtitle), @json($schema->badge), @json($schema->icon), {{ $schema->harga }}, {{ $schema->diskon ?? 0 }}, @json($schema->satuan), @json($schema->status), @json($featuresList), {{ $schema->is_recommended ? 'true' : 'false' }}, @json($schema->cta_text), @json($schema->cta_link))' class="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Edit">
                                         <i data-lucide="edit" class="w-4 h-4"></i>
                                     </button>
                                     <button onclick="openConfirmModal('{{ route('admin.schemas.destroy', $schema) }}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
@@ -100,10 +100,14 @@
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Harga (Rp)</label>
                             <input type="number" name="harga" id="schemaHarga" min="0" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" required />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Diskon (%)</label>
+                            <input type="number" name="diskon" id="schemaDiskon" min="0" max="100" value="0" class="w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-emerald-500 focus:border-emerald-500 block p-3" />
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-1.5">Satuan Paket</label>
@@ -182,7 +186,7 @@
         modal.classList.remove('flex');
     }
 
-    function openSchemaModal(id = null, skema = '', subtitle = '', badge = '', icon = '', harga = '', satuan = '', status = 'Aktif', features = '', is_recommended = false, cta_text = 'Hubungi Kami', cta_link = '#') {
+    function openSchemaModal(id = null, skema = '', subtitle = '', badge = '', icon = '', harga = '', diskon = 0, satuan = '', status = 'Aktif', features = '', is_recommended = false, cta_text = 'Hubungi Kami', cta_link = '#') {
         const form = document.getElementById('schemaForm');
         
         form.querySelector('input[name="_method"]')?.remove();
@@ -205,6 +209,7 @@
         document.getElementById('schemaBadge').value = badge;
         document.getElementById('schemaIcon').value = icon;
         document.getElementById('schemaHarga').value = harga;
+        document.getElementById('schemaDiskon').value = diskon;
         document.getElementById('schemaSatuan').value = satuan;
         document.getElementById('schemaStatus').value = status;
         document.getElementById('schemaFeatures').value = features;

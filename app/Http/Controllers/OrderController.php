@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Schema;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -53,6 +54,10 @@ class OrderController extends Controller
         $lastId = Order::orderByRaw('CAST(SUBSTRING(id, 3, 3) AS UNSIGNED) DESC')->value('id');
         $seq = $lastId ? ((int) preg_replace('/\D/', '', explode('-', $lastId)[0]) + 1) : 1;
 
+        $diskonPercent = $schema->diskon ?? 0;
+        $discountedPrice = $schema->harga - ($schema->harga * ($diskonPercent / 100));
+        $totalHarga = $discountedPrice * $validated['qty'];
+
         Order::create([
             'id' => sprintf('MC%03d-%d-%d', $seq, now()->day, now()->year),
             'customer_id' => $customer->id,
@@ -61,12 +66,13 @@ class OrderController extends Controller
             'skema' => $schema->skema,
             'qty' => $validated['qty'],
             'duration' => $validated['duration'] ?? null,
-            'total' => $schema->harga * $validated['qty'],
+            'total' => $totalHarga,
             'status' => $validated['status'],
             'tanggal' => $validated['tanggal'],
             'image' => $validated['image'] ?? null,
             'is_preorder' => $isPreorder,
             'is_stock_deducted' => $isStockDeducted,
+            'diskon' => $diskonPercent,
         ]);
 
         return back()->with('success', 'Pesanan berhasil ditambahkan.');
@@ -194,5 +200,19 @@ class OrderController extends Controller
         $order->delete();
 
         return back()->with('success', 'Pesanan berhasil dihapus.');
+    }
+
+    public function invoice(Order $order)
+    {
+        if (!in_array($order->status, ['Proses', 'Selesai'])) {
+            return back()->with('error', 'Invoice hanya dapat diunduh untuk pesanan yang sudah diproses atau selesai.');
+        }
+
+        $order->load(['customer', 'schema', 'paymentMethod']);
+
+        $pdf = Pdf::loadView('orders.invoice', compact('order'));
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->download('Invoice-' . $order->id . '.pdf');
     }
 }
