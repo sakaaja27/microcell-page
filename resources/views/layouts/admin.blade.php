@@ -8,10 +8,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900 antialiased" x-data>
+<body class="bg-slate-50 font-sans text-slate-900 antialiased" x-data="{ sidebarOpen: false }">
     <div class="flex min-h-screen">
+        <div x-show="sidebarOpen" class="fixed inset-0 bg-slate-900/50 z-40 lg:hidden" @click="sidebarOpen = false" x-transition.opacity style="display: none;"></div>
+        
         <!-- Sidebar -->
-        <aside class="w-64 bg-slate-900 text-white min-h-screen flex flex-col shadow-xl shrink-0">
+        <aside class="w-64 bg-slate-900 text-white min-h-screen flex flex-col shadow-xl shrink-0 fixed lg:static inset-y-0 left-0 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out" :class="{'translate-x-0': sidebarOpen}">
             <div class="h-16 flex items-center px-6 border-b border-slate-800">
                 <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-green-400">
                     MicroCell
@@ -66,10 +68,13 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <main class="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
             <!-- Header -->
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-end px-8 shadow-sm shrink-0">
-                <div class="text-sm font-medium text-slate-500">
+            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 shadow-sm shrink-0">
+                <button @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 text-slate-500 hover:bg-slate-100 rounded-lg">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <div class="text-sm font-medium text-slate-500 ml-auto">
                     {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
                 </div>
             </header>
