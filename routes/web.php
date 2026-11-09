@@ -23,13 +23,20 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register.attempt');
 });
 
+// Route yang bisa diakses semua user yang sudah login
 Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+// Route khusus customer
+Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/riwayat-transaksi', [\App\Http\Controllers\CheckoutController::class, 'history'])->name('customer.history');
     Route::get('/order/{schema}', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('customer.checkout');
     Route::post('/order/{schema}', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('customer.checkout.store');
-    
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
+// Route khusus admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/product', [ProductController::class, 'index'])->name('admin.products');
